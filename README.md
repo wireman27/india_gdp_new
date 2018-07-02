@@ -49,7 +49,7 @@ c)Add SGDPa and SGDPb
 
 # Final Result
 
-The final result is 1km2 grid depicting 2015-2016 GDP constant 2011-2012 prices. Each pixel expressed as INR
+The final result is a 1km<sup>2</sup> grid depicting 2015-2016 GDP constant 2011-2012 prices. Each pixel expressed as INR
 
 
 # Limitations
