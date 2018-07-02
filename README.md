@@ -4,23 +4,23 @@ Visualising India's GDP with a spatial resolution of 1km<sup>2</sup>
 
 # Datasets
 
-## **1. Nightlight Imagery**
+## **Nightlight Imagery**
 
 Visible Infrared Imaging Radiometer Suite (VIIRS) Day/Night Band (DNB) Annual Composite for 2015 that removes outliers occurring due to fires and other ephemeral lights, and zeroes out background (non-light) pixels. Each pixel expressed as nanoWatts/cm2/steradian
 
 **Source:** _SVDNB\_npp\_20150101-20151231\_00N060E\_vcm-orm-ntl\_v10\_c201701311200.avg\_rade9.tif_ from [https://bit.ly/2tG5vtg](https://bit.ly/2tG5vtg)
 
-## **2. Population**
+## **Population**
 
 Global Human Settlement Population Grid for 2015. Each pixel expressed as absolute number of people
 
 **Source:** _GHS\_POP\_GPW42015\_GLOBE\_R2015A\_54009\_1k_ from https://bit.ly/2lGWM5K
 
-## **3. Gross State Domestic Product (GSDP) &amp; Share of Agriculture in GSDP**
+## **Gross State Domestic Product (GSDP) &amp; Share of Agriculture in GSDP**
 
 GSDP (at Market Price) for 2015-2016 at constant 2011-2012 prices
 
-## **Sources**
+**Sources**
 
 For all states and territories except West Bengal, the GDP numbers were readily available at [http://mospi.gov.in/sites/default/files/press\_releases\_statements/StatewiseDomesticProduct\_28feb18.xls](http://mospi.gov.in/sites/default/files/press_releases_statements/StatewiseDomesticProduct_28feb18.xls) .
 
@@ -33,7 +33,7 @@ Since the Government of West Bengal hasn&#39;t released the GDP figures for 2011
 
 
 
-## **4. State Boundaries**
+## **State Boundaries**
 
 [https://github.com/datameet/maps/tree/master/Districts](https://github.com/datameet/maps/tree/master/Districts)
 
