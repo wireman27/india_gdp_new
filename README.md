@@ -56,7 +56,7 @@ The final result is 1km2 grid depicting 2015-2016 GDP constant 2011-2012 prices.
 
 Areas with extremely bright lights get allocated commensurate GDP figures – for example visible spikes are seen in places like Jamnagar (Gujarat), Surasaniyanam (slightly East of Vijayawada in Andhra Pradesh) and in Dibrugarh (Assam). Since this is most likely caused by the prevalence of oil refineries in these areas, the allocation might not be entirely misleading. 
 
-Since state-level GDP data is collected by the respective State Governments (and not the Union), the GDP methodology might not be standardised across the states. While this would not affect within-state comparisons of GDP, it could affect across-state comparisons.
+Since state-level GDP data is collected by the respective State Governments (and not the Union Government), the GDP methodology might not be standardised across the states. While this would not affect within-state comparisons of GDP, it could affect across-state comparisons.
 
 In essence, the limitations of the methodology in Ghosh, T., Powell, R., Elvidge, C. D., Baugh, K. E., Sutton, P. C., &amp; Anderson, S. (2010) apply to this data-set as well. That leads us to the important caveat that while the original intention of the methodology was to disaggregate GDP, the dataset might work much better if looked at as a bunch of clusters rather than as a bunch of individual grids.
 
