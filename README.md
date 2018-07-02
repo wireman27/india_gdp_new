@@ -2,9 +2,9 @@
 Visualising India's GDP with a spatial resolution of 1km<sup>2</sup>
 
 
-#Datasets
+# Datasets
 
-##**1. Nightlight Imagery**
+## **1. Nightlight Imagery**
 
 Visible Infrared Imaging Radiometer Suite (VIIRS) Day/Night Band (DNB) Annual Composite for 2015 that removes outliers occurring due to fires and other ephemeral lights, and zeroes out background (non-light) pixels. Each pixel expressed as nanoWatts/cm2/steradian
 
