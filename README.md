@@ -42,10 +42,9 @@ The methodology draws heavily from Ghosh, T., Powell, R., Elvidge, C. D., Baugh,
 1. Add the light value of all pixels within each region i. This gives the sum of lights for each region (SLi)
 2. Derive Ri = SLi/GSDPi where GSDPi represents the gross state domestic product for region i and Ri is a ratio that essentially tells us &#39;how much light is emitted as a proportion of the GSDP&#39; for each region i.
 3. The GSDP for each pixel is finally calculated as follows:
-
-1. a)Industrial and Non-Agricultural Component: Calculate how much light is emitted by that pixel relative to the total light emitted by the state – say 2%. Multiply 2% by the SGDP for the state giving SGDPa
-2. b)Agricultural/Non-Industrial Component: Calculate how much many people live in the pixel relative to the total population of the state – say 5%. Multiply 5% by the agricultural SGDP for the state giving SGDPb.
-3. c)Add SGDPa and SGDPb
+a)Industrial and Non-Agricultural Component: Calculate how much light is emitted by that pixel relative to the total light emitted by the state – say 2%. Multiply 2% by the SGDP for the state giving SGDPa
+b)Agricultural/Non-Industrial Component: Calculate how many people live in the pixel relative to the total population of the state – say 5%. Multiply 5% by the agricultural SGDP for the state giving SGDPb.
+c)Add SGDPa and SGDPb
 
 
 # Final Result
