@@ -57,4 +57,8 @@ The methodology draws heavily from Ghosh, T., Powell, R., Elvidge, C. D., Baugh,
 
 The final result is 1km2 grid depicting 2015-2016 GDP constant 2011-2012 prices. Each pixel expressed as INR
 
+
+**Limitations**
+Areas with extremely bright lights get allocated commensurate GDP figures – for example visible spikes are seen in places like Jamnagar (Gujarat), Surasaniyanam (slightly East of Vijayawada in Andhra Pradesh) and in Dibrugarh (Assam). This is most likely caused by the prevalence of oil refineries in these areas so the allocation might not be entirely misleading.
+
 (Thanks to Ben Balter's sleek Word to Markdown tool on [https://word-to-markdown.herokuapp.com/])
