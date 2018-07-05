@@ -61,8 +61,6 @@ Since state-level GDP data is collected by the respective State Governments (and
 In essence, the limitations of the methodology in Ghosh, T., Powell, R., Elvidge, C. D., Baugh, K. E., Sutton, P. C., &amp; Anderson, S. (2010) apply to this data-set as well. That leads us to the important caveat that while the original intention of the methodology was to disaggregate GDP, the dataset might work much better if looked at as a bunch of clusters rather than as a bunch of individual grids.
 
 
-<<<<<<< HEAD
 (Thanks to Ben Balter's sleek Word to Markdown tool on https://word-to-markdown.herokuapp.com/)
-=======
-(Thanks to Ben Balter's sleek Word to Markdown tool on https://word-to-markdown.herokuapp.com/)
->>>>>>> c2688b4a8985f195333525685b4b0628efb5106c
+
+
