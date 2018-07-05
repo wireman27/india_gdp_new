@@ -16,11 +16,11 @@
 <div id='map'></div>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUycHRnMzNuaW14eHE5d24yIn0.0ty0jyl5uuIF4fulta_vjg';
-var url = 'https://a.tiles.mapbox.com/v4/wireman27.77dpfwsu/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
+var url = 'https://a.tiles.mapbox.com/v4/wireman27.bxpy8xv2/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/light-v9',
-    zoom: 5.37,
+    zoom: 5,
     center: [77.645, 16],
     pitch: 60,
     bearing: 0.6,
@@ -37,21 +37,21 @@ map.on('load', function () {
             type: 'vector',
             tiles: [url]
         },
-        "source-layer": "gdp",
+        "source-layer": "gdp4",
         'paint': {
             'fill-extrusion-color': { 
-                'property': 'dump',
+                'property': 'gdpp_mill',
                 'type': 'exponential',
                 'stops': [ 
-                [893807296,'#ffff99'],
-                [1787614592,'#ff9933'],
-                [2681421888,'#ff5050'],
-                [3575229184,'#660033']
+                [100,'#ffff99'],
+                [500,'#ff9933'],
+                [1500,'#ff5050'],
+                [4000,'#660033']
                 ]
             },
             // use an 'interpolate' expression to add a smooth transition effect to the
             // buildings as the user zooms in
-            'fill-extrusion-height': ["/",["get","dump"], 100000],
+            'fill-extrusion-height': ["*",["get","gdpp_mill"], 10],
             'fill-extrusion-opacity': .6
         }
     });
