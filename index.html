@@ -6,6 +6,7 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
+    <link href='css/styles.css' rel='stylesheet' />
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -14,6 +15,7 @@
 <body>
 
 <div id='map'></div>
+<div id='loader' class="loader"></div>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUycHRnMzNuaW14eHE5d24yIn0.0ty0jyl5uuIF4fulta_vjg';
 var url = 'https://a.tiles.mapbox.com/v4/wireman27.bxpy8xv2/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
@@ -33,15 +35,16 @@ var currentZoom = 5;
 map.on('zoomend', function(){
     var zoomEnd = map.getZoom();
     if(currentZoom < 9 && zoomEnd > 9) { 
+        document.getElementById('loader').style.display = 'block';
         map.setStyle('mapbox://styles/mapbox/satellite-v9?optimize=true')
-        currentZoom = zoomEnd 
+        currentZoom = zoomEnd;
     }
-
     if(currentZoom > 9 && zoomEnd < 9) { 
         map.setStyle('mapbox://styles/mapbox/light-v9?optimize=true')
-        currentZoom = zoomEnd 
+        currentZoom = zoomEnd;
     }
 });
+
 
 function addDataLayer() {
     map.addLayer({
@@ -73,6 +76,10 @@ function addDataLayer() {
 
 map.on('style.load', function () {
     addDataLayer();
+    map.on('sourcedata',function(){
+        if(map.areTilesLoaded()) {
+            console.log('NOW')}
+    });
 });
 
 </script>
