@@ -19,7 +19,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUyc
 var url = 'https://a.tiles.mapbox.com/v4/wireman27.bxpy8xv2/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v9',
+    style: 'mapbox://styles/mapbox/light-v9?optimize=true',
     zoom: 5,
     center: [77.645, 16],
     pitch: 60,
@@ -28,8 +28,22 @@ var map = new mapboxgl.Map({
     hash: true
 });
 
-map.on('load', function () {
+var currentZoom = 5;
 
+map.on('zoomend', function(){
+    var zoomEnd = map.getZoom();
+    if(currentZoom < 9 && zoomEnd > 9) { 
+        map.setStyle('mapbox://styles/mapbox/satellite-v9?optimize=true')
+        currentZoom = zoomEnd 
+    }
+
+    if(currentZoom > 9 && zoomEnd < 9) { 
+        map.setStyle('mapbox://styles/mapbox/light-v9?optimize=true')
+        currentZoom = zoomEnd 
+    }
+});
+
+function addDataLayer() {
     map.addLayer({
         "id": "gdp-data",
         "type": "fill-extrusion",
@@ -55,7 +69,12 @@ map.on('load', function () {
             'fill-extrusion-opacity': .6
         }
     });
+}
+
+map.on('style.load', function () {
+    addDataLayer();
 });
+
 </script>
 
 </body>
