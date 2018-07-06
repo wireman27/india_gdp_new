@@ -44,12 +44,14 @@ Since the Government of West Bengal hasn&#39;t released the GDP figures for 2011
 
 # Initial Cleansing
 
-Initially, areas with extremely bright lights got allocated commensurate GDP figures – for example visible spikes were seen in places like Jamnagar (Gujarat), Surasaniyanam (slightly East of Vijayawada in Andhra Pradesh) and in Dibrugarh (Assam). On deeper inspection, it seemed like this was largely due to the prevalence of gas flaring activities in these regions. Using the Skytruth dataset, gas flaring areas were plotted, buffered by a fixed distance and then this buffered area was used to zero out the original radiance value shown by the untouched VIIRS dataset. In addition, all pixels emitting a radiance of above 160 nanoWatts/cm<sup>2</sup>/steradian were also zeroed out on the assumption that these were undetected gas flares (see [caveats](https://www.skytruth.org/viirs/) of the SkyTruth dataset). A value of 160 was picked based on some simple localised analyses that showed that the brightest regions in cities do not emit more than around 100 nanoWatts and that the brightest airports don't emit more than around 150 nanoWatts.
+Initially, areas with extremely bright lights got allocated commensurate GDP figures – for example visible spikes were seen in places like Jamnagar (Gujarat), Surasaniyanam (slightly East of Vijayawada in Andhra Pradesh) and in Dibrugarh (Assam). On deeper inspection, it seemed like this was largely due to the prevalence of gas flaring activities in these regions. 
+
+Using the Skytruth dataset, gas flaring areas were plotted, buffered by a fixed distance and then this buffered area was used to zero out the original radiance value shown by the untouched VIIRS dataset. In addition, all pixels emitting a radiance of above 160 nanoWatts/cm<sup>2</sup>/steradian were also zeroed out on the assumption that these were undetected gas flares (see [caveats](https://www.skytruth.org/viirs/) of the SkyTruth dataset). A value of 160 was picked based on some simple localised analyses that showed that the brightest regions in cities do not emit more than around 100 nanoWatts and that the brightest airports don't emit more than around 150 nanoWatts.
 
 
 # Methodology
 
-The methodology draws heavily from Ghosh, T., Powell, R., Elvidge, C. D., Baugh, K. E., Sutton, P. C., &amp; Anderson, S. (2010). The basic idea can be conveyed as follows:
+The methodology draws heavily from this [paper](https://www.researchgate.net/publication/228371381_Shedding_Light_on_the_Global_Distribution_of_Economic_Activity)
 
 1. Add the light value of all pixels within each region i. This gives the sum of lights for each region (SLi)
 2. Derive Ri = SLi/GSDPi where GSDPi represents the gross state domestic product for region i and Ri is a ratio that essentially tells us &#39;how much light is emitted as a proportion of the GSDP&#39; for each region i.
