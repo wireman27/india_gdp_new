@@ -35,7 +35,7 @@ var currentZoom = 5;
 map.on('zoomend', function(){
     var zoomEnd = map.getZoom();
     if(currentZoom < 9 && zoomEnd > 9) { 
-        document.getElementById('loader').style.display = 'block';
+        //document.getElementById('loader').style.display = 'block';
         map.setStyle('mapbox://styles/mapbox/satellite-v9?optimize=true')
         currentZoom = zoomEnd;
     }
@@ -76,10 +76,6 @@ function addDataLayer() {
 
 map.on('style.load', function () {
     addDataLayer();
-    map.on('sourcedata',function(){
-        if(map.areTilesLoaded()) {
-            console.log('NOW')}
-    });
 });
 
 </script>
