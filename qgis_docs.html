@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>India GDP - QGIS Docs</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="css/qgis_docs.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  </head>
+<body>
+  <div class="container">
+	<header><h>Quick QGIS Walkthrough for Creating the India GDP Webmap</h></header>
+  <br>
+  <br>
+  <p class="sh"><h>What you'll need</h></p>
+  <div id="needed">
+  Files:
+  <ul>
+    <li> <a href=https://bit.ly/2tG5vtg target="_blank">TIF VIIRS Nightlight Imagery</a> - call this file 'viirs.tif' for this walkthrough </li>
+    <li> <a href=https://bit.ly/2lGWM5K>TIF Population Grid</a> - call this file 'pop.tif' for this walkthrough</li>
+    <li> <a href=https://github.com/wireman27/india_gdp_new/blob/master/state_boundary/State.geojson>Geojson Indian States/Territories</a> - call this file 'State.geojson' for this walkthrough </li>
+    <li> <a href=https://github.com/wireman27/india_gdp_new/blob/master/csvs/states_ids.csv>CSV states-ids</a></li>
+    <li> <a href=https://github.com/wireman27/india_gdp_new/blob/master/csvs/gf_india.csv>CSV gf_india</a></li>
+  </ul>
+  Tools:
+  <ul>
+    <li> <a href=https://qgis.org/en/site/ target="_blank">QGIS - any fairly recent version</a></li>
+    <li> <a href=https://github.com/mapbox/tippecanoe>tippecanoe</a></li>
+    <li> <a href=https://www.python.org/download/releases/3.0/?>Python3</a></li>
+  </ul>
+  </div>
+  <br>
+  <p class="sh"><h>Steps</h></p>
+  <div id="steps">
+    <button class="accordion">Step 1: Resampling and Clipping TIFs</button>
+      <div class="panel">
+        <p>First, we need to resample the population grid since it has a different co-ordinate system. Load the two TIFs and then go to <code class="w3-codespan">Raster -> Projections -> Warp (Reproject)</code>. Ensure the population grid is selected, name your output file 'pop_r.tif' and ensure that the target SRS has Co-Ordinate Reference System WGS 84 with Authority ID EPSG:4326</p>
+        <p>Now, add State.geojson and open the raster clip tool in <code class="w3-codespan">Raster -> Extraction -> Clipper</code>. Select 'Mask Layer' in Clipping Mode and then ensure the State.geojson layer is selected. Do this for both rasters (viirs_r and pop) and then save these as viirs_r_c.tif and pop_c.tif respectively.</p>
+      </div>
+    <button class="accordion">Step 2: Rasterize State Boundary Vector </button>
+      <div class="panel">
+        <p>First, we need to ensure that both pop_c and viirs_r_c are aligned properly. Go to <code class="w3-codespan">Raster -> Align Rasters</code>. Add the two rasters and then save them as their own names (overwrite). Use any layer as the reference layer.</p>
+        <p>Now, use the raster calculator to create an 'empty' raster by applying the formula as 'pop_c@1 = 0'. Save this as 'states.tif'. Now go to <code class="w3-codespan">Raster -> Conversion -> Rasterize</code>. Choose the input layer as State.geojson. Choose the Attribute Field as St_Csus_Cd and the output file as states.tif keeping the resolution as the output file.</p>
+      </div>
+    <button class="accordion">Step 3: Quick Check of Resolution</button>
+      <div class="panel">
+        <p>Ensure that you have three TIFs - viirs_r_c.tif, pop_c.tif and states.tif - all with the same resolution and grid offset. This can be checked by going to Raster Calculator, adding all three layers and then checking that all three have the same pixel size and grid offset</p>
+      </div>
+    <button class="accordion">Step 4: Dealing with Gas Flares</button>
+      <div class="panel">
+        <p>Import gf_india.csv through <code class="w3-codespan">Layer -> Add Layer -> Add Delimited Text Layer</code>. Next, we create two fixed distance buffers (with dissolved result) and then derive the nodes of the buffers. To do this, go to <code class="w3-codespan">Vector -> Geoprocessing Tools -> Fixed Distance Buffer</code>. Here, choose the input layer as the gas flare points, distance as around 0.000996 first (this is the X-length of any of the TIF layers. This figure can be seen if you right click the layer and click 'Properties'). Ensure 'Dissolve Result' is selected and run the algorithm. Now go to <code class="w3-codespan">Vector -> Geometry Tools -> Extract Nodes</code>. Ensure the input layer is the buffer.</p>
+        <p>Repeat this process of 'Fixed Distance Buffer and then Extract Nodes' for the gas flare points again - but this time for a distance of 1.5 times the X-length of the pixel. We will eventually have three layers we would want to work with for the gas flares - pointLayer1 from the first buffer, pointLayer2 from the second buffer and gf_india. Merge this by going to <code class="w3-codespan">Vector -> Data Management Tools -> Merge</code> vector layers. Select these three layers and save it as a .shp file called gf_india_wb.shp</p>
+      </div>
+    <button class="accordion">Step 5: Vector Grid</button>
+      <div class="panel">
+        <p>Go to <code class="w3-codespan">Vector -> Research Tools -> Vector Grid</code>. Under 'Grid extent', choose 'Use layer/canvas extent' and select viirs_r_c.tif. Save the vector grid as generic_grid.shp</p>
+      </div>
+    <button class="accordion">Step 6: Count Points in Polygon</button>
+      <div class="panel">
+        <p>For this step, you'll need two layers - generic_grid.shp that you just created, and gd_india_wb.shp. Go to <code class="w3-codespan">Processing -> Toolbox</code>. Here, search for 'Count points in polygon'. Open the tool. 'Polygons' should have the grid you just created, 'Points' should have gf_india_wb. Run the algorithm. You can save this is a temporary layer.</p>
+        <p>Now, create another 'empty' raster like in Step 2 and call this 'gf_count.tif'. Rasterize the temporary layer with output layer file as gf_count.tif and attribute as 'NUMPOINTS'</p>
+      </div>
+    <button class="accordion">Step 7: Cleaning up VIIRS</button>
+      <div class="panel">
+        <p>Use the raster calculator with formula ("gf_count@1" < 0.01)*viirs_r_c and save as viirs.tif. Then, use the raster calculator with formula ("viirs" < 160)*viirs and overwrite as viirs.tif. This should give you a final viirs.tif with gas flare pixels and pixels above radiance value of 160 zeroed out.</p>
+      </div>
+    <button class="accordion">Step 8: Quick Check of Resolution</button>
+      <div class="panel">
+        <p>Again ensure that all three rasters - viirs.tif, pop.tif and states.tif - have the same pixel size, resolution and grid offset (very important). Do this by repeating Step 3 for all three layers. If they are not aligned, align them.</p>
+      </div>
+    <button class="accordion">Step 9: gdal2xyz</button>
+      <div class="panel">
+        <p>Go to <code class="w3-codespan">Processing -> Toolbox</code>. Search for gdal2xyz and convert each of the three raster layers to csvs one by one. Name them viirs.csv, pop.csv and states.csv</p>
+      </div>
+    <button class="accordion">Step 10: Python</button>
+      <div class="panel">
+        <p>Run the Python tool to create the GDP value for each pixel which returns final.csv</p>
+      </div>
+    <button class="accordion">Step 11: Final Imports</button>
+      <div class="panel">
+        <p>Import final.csv as a delimited dataset. Also import generic_grid.shp again if not already in the workspace</p>
+      </div>
+    <button class="accordion">Step 12: Join Attributes by Location</button>
+      <div class="panel">
+        <p>Do this by going to <code class="w3-codespan">Vector -> Data Management Tools -> Join Vector by Location</code>. Here, choose 'Target vector layer' as the generic grid and the 'Join Vector Layer' as the point layer imported via final.csv. In 'Geometric predicate', choose 'contains' and under 'statistics for summary', type only 'sum'. In 'Joined Layer', save the layer as gdpp.shp</p>
+      </div>
+    <button class="accordion">Step 13: Save</button>
+      <div class="panel">
+        <p>Right click the layer 'gdpp.shp' and click 'Save As'. Save it as gdpp.geojson. Scroll down and ensure only 'gdpp_mill' is saved as an attribute and the coordinate precision is 4.</p>
+      </div>
+    <button class="accordion">Step 14: tippecanoe</button>
+      <div class="panel">
+        <p>Run tippecanoe to convert gdpp.geojson to gdpp.mbtiles</p>
+      </div>
+  </div>
+  </div>
+
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+        } else {
+            panel.style.display = "block";
+        }
+    });
+}
+</script>
+</body>
+</html>

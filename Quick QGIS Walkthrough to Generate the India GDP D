@@ -1,0 +1,101 @@
+Quick QGIS Walkthrough to Generate the India GDP Dataset
+
+You'll need the following files:
+
+TIF VIIRS Nightlight Imagery: https://bit.ly/2tG5vtg - call this file 'viirs.tif' for this walkthrough
+TIF Population Grid: https://bit.ly/2lGWM5K - call this file 'pop.tif' for this walkthrough
+Geojson Indian States/Territories: https://github.com/wireman27/india_gdp_new/blob/master/state_boundary/State.geojson - call this State.geojson
+CSV states-ids: https://github.com/wireman27/india_gdp_new/blob/master/csvs/states_ids.csv
+CSV gf_india: https://github.com/wireman27/india_gdp_new/blob/master/csvs/gf_india.csv 
+
+You'll need the following tools:
+
+QGIS - a fairly recent version
+tippecanoe
+Python3
+
+QGIS - All Tools Used (in order):
+
+Raster -> Projections -> Warp (Reproject)
+Raster -> Extraction -> Clipper
+Raster -> Align Rasters
+Raster -> Conversion -> Rasterize
+Vector -> Geoprocessing Tools -> Fixed Distance Buffer
+Vector -> Geometry Tools -> Extract Nodes
+Vector -> Data Management Tools -> Merge vector layers
+Vector -> Research Tools -> Vector Grid
+Processing -> Toolbox -> Count points in polygon
+Processing -> Toolbox -> gdal2xyz
+Vector -> Data Management Tools -> Join Vector by Location
+
+
+1. Resample and clip the TIFs to the extent of the state boundaries
+
+First, we need to resample the population grid since it has a different co-ordinate system. Load the two TIFs and then go to Raster -> Projections -> Warp (Reproject). Ensure the population grid is selected, name your output file 'pop_r.tif' and ensure that the target SRS has Co-Ordinate Reference System WGS 84 with Authority ID EPSG:4326
+
+Now, add State.geojson and open the raster clip tool in Raster -> Extraction -> Clipper. Select 'Mask Layer' in Clipping Mode and then ensure the State.geojson layer is selected. Do this for both rasters (viirs_r and pop) and then save these as viirs_r_c.tif and pop_c.tif respectively.
+
+2. Rasterize the state boundary vector to match the resolution and grid offset of the the population and viirs TIFs
+
+First, we need to ensure that both pop_c and viirs_r_c are aligned properly. Go to Raster -> Align Rasters. Add the two rasters and then save them as their own names (overwrite). Use any layer as the reference layer.
+
+Now, use the raster calculator to create an 'empty' raster by applying the formula as 'pop_c@1 = 0'. Save this as 'states.tif'. Now go to Raster -> Conversion -> Rasterize. Choose the input layer as State.geojson. Choose the Attribute Field as St_Csus_Cd and the output file as states.tif keeping the resolution as the output file.
+
+3. Ensure that you have three TIFs - viirs_r_c.tif, pop_c.tif and states.tif - all with the same resolution and grid offset.
+
+This can be checked by going to Raster Calculator, adding all three layers and then checking that all three have the same pixel size and grid offset
+
+4. Treating gas flares
+
+Import gf_india.csv through Layer -> Add Layer -> Add Delimited Text Layer. Next, we create two fixed distance buffers (with dissolved result) and then derive the nodes of the buffers. To do this, go to Vector -> Geoprocessing Tools -> Fixed Distance Buffer. Here, choose the input layer as the gas flare points, distance as around 0.000996 first (this is the X-length of any of the TIF layers. This figure can be seen if you right click the layer and click 'Properties'). Ensure 'Dissolve Result' is selected and run the algorithm. Now go to Vector -> Geometry Tools -> Extract Nodes. Ensure the input layer is the buffer.
+
+Repeat this process of 'Fixed Distance Buffer and then Extract Nodes' for the gas flare points again - but this time for a distance of 1.5 times the X-length of the pixel. We will eventually have three layers we would want to work with for the gas flares - pointLayer1 from the first buffer, pointLayer2 from the second buffer and gf_india. Merge this by going to Vector -> Data Management Tools -> Merge vector layers. Select these three layers and save it as a .shp file called gf_india_wb.shp
+
+5. Create a generic vector grid from the VIIRS data
+
+Go to Vector -> Research Tools -> Vector Grid. Under 'Grid extent', choose 'Use layer/canvas extent' and select viirs_r_c.tif. Save the vector grid as generic_grid.shp
+
+6. Import the vector grid and run the 'Count points in polygon' tool. Rasterize the vector grid (which now includes the attribute NUMPOINTS)
+
+For this step, you'll need two layers - generic_grid.shp that you just created, and gd_india_wb.shp. Go to Processing -> Toolbox. Here, search for 'Count points in polygon'. Open the tool. 'Polygons' should have the grid you just created, 'Points' should have gf_india_wb. Run the algorithm. You can save this is a temporary layer.
+
+Now, create another 'empty' raster like in Step 2 and call this 'gf_count.tif'. Rasterize the temporary layer with output layer file as gf_count.tif
+
+7. Import this raster and use the raster calculator to 0 out all pixels in VIIRS where the newly rasterized vector has a value of 1. Run the raster calculator again to remove anything above light value of 160.
+
+Use the raster calculator with formula ("gf_count@1" < 0.01)*viirs_r_c and save as viirs.tif
+Use the raster calculator with formula ("viirs" < 160)*viirs and overwrite as viirs.tif
+
+This should give you a final viirs.tif with gas flare pixels and pixels above radiance value of 160 zeroed out.
+
+
+8. Again ensure that all three rasters - viirs.tif, pop.tif and states.tif - have the same pixel size, resolution and grid offset (very important)
+
+Do this by repeating Step 3 for all three layers. If they are not aligned, align them.
+
+9. Use the gdal2xyz tool to convert all three TIFs to CSVs
+
+Go to Processing -> Toolbox. Search for gdal2xyz and convert each of the three raster layers to csvs one by one. Name them viirs.csv, pop.csv and states.csv
+
+10. Run the Python tool to create the GDP value for each pixel which returns final.csv
+
+11. Import final.csv as a delimited dataset. Also import generic_grid.shp again
+
+12. Use the Join Attributes by Location tool to ensure each polygon in the vector grid has the GDP value of the point it contains
+
+Do this by going to Vector -> Data Management Tools -> Join Vector by Location. Here, choose 'Target vector layer' as the generic grid and the 'Join Vector Layer' as the point layer imported via final.csv. In 'Geometric predicate', choose 'contains' and under 'statistics for summary', type only 'sum'. In 'Joined Layer', save the layer as gdpp.shp
+
+13. Save this final grid as a geojson
+
+Right click the layer 'gdpp.shp' and click 'Save As'. Save it as gdpp.geojson. Scroll down and ensure only 'gdpp_mill' is saved as an attribute and the coordinate precision is 4.
+
+14. Run tippecanoe to convert gdpp.geojson to gdpp.mbtiles
+
+Load into QGIS the following datasets:
+
+VIIRS Nightlight Imagery (Raster): https://bit.ly/2tG5vtg
+Population Grid (Raster): https://bit.ly/2lGWM5K
+Indian States/Territories (Vector): https://github.com/wireman27/india_gdp_new/blob/master/state_boundary/State.geojson
+
+
+
