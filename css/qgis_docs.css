@@ -23,12 +23,20 @@
     overflow: hidden;
 }
 
+th {
+    text-align: left;
+}
+
 .sh {
     font-size: 23px;
 }
 
 a {
     color: grey;
+}
+
+td {
+    padding-right: 20px;
 }
 
 body {
