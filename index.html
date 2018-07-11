@@ -5,7 +5,10 @@
     <title>GDP Cities 2015-2016</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
     <link href='css/styles.css' rel='stylesheet' />
     <style>
         body { margin:0; padding:0; }
@@ -19,6 +22,7 @@
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUycHRnMzNuaW14eHE5d24yIn0.0ty0jyl5uuIF4fulta_vjg';
 var url = 'https://a.tiles.mapbox.com/v4/wireman27.bxpy8xv2/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
+var states_url = 'https://a.tiles.mapbox.com/v4/wireman27.dzygdngz/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/light-v9?optimize=true',
@@ -26,33 +30,32 @@ var map = new mapboxgl.Map({
     center: [77.645, 16],
     pitch: 60,
     bearing: 0.6,
-    minZoom: 5,
+    minZoom: 3,
     hash: true
 });
 
 var currentZoom = 5;
+var hoveredStateId =  null;
 
-map.on('zoomend', function(){
-    var zoomEnd = map.getZoom();
-    if(currentZoom < 9 && zoomEnd > 9) { 
-        //document.getElementById('loader').style.display = 'block';
-        map.setStyle('mapbox://styles/mapbox/satellite-v9?optimize=true')
-        currentZoom = zoomEnd;
-    }
-    if(currentZoom > 9 && zoomEnd < 9) { 
-        map.setStyle('mapbox://styles/mapbox/light-v9?optimize=true')
-        currentZoom = zoomEnd;
-    }
-});
+function addGdp() {
+    map.addSource("gdp",{
+        "type":"vector",
+        "tiles": [url]
+    });
+}
+
+function addStates() {
+    map.addSource("states",{
+        "type":"vector",
+        "tiles": [states_url]
+    });
+}
 
 function addDataLayer() {
     map.addLayer({
         "id": "gdp-data",
         "type": "fill-extrusion",
-        "source": {
-            type: 'vector',
-            tiles: [url]
-        },
+        "source": "gdp",
         "source-layer": "gdp4",
         'paint': {
             'fill-extrusion-color': { 
@@ -71,11 +74,71 @@ function addDataLayer() {
             'fill-extrusion-opacity': .6
         }
     });
+
+    map.addLayer({
+        "id":"states",
+        "type":"fill",
+        "source": "states",
+        "layout": {},
+        "source-layer":'State_wi2',
+        "paint": {
+            "fill-color": "#ff3300",
+            "fill-opacity": ["case",
+                ["boolean", ["feature-state", "hover"], false],
+                0.1,
+                0
+            ]
+        }
+    })
 }
 
 map.on('style.load', function () {
+    addGdp();
+    addStates();
     addDataLayer();
 });
+
+map.on('zoomend', function(){
+    var zoomEnd = map.getZoom();
+    if(currentZoom < 9.5 && zoomEnd > 9.5) { 
+        //document.getElementById('loader').style.display = 'block';
+        map.setStyle('mapbox://styles/mapbox/satellite-v9?optimize=true')
+        currentZoom = zoomEnd;
+    }
+    if(currentZoom > 9.5 && zoomEnd < 9.5) { 
+        map.setStyle('mapbox://styles/mapbox/light-v9?optimize=true')
+        currentZoom = zoomEnd;
+    }
+});
+
+map.on('click','states',function(e) {
+    if (hoveredStateId) {
+        var bbox = turf.bbox(e.features[0]);
+        map.fitBounds(bbox);
+    }
+})
+
+map.on("mousemove", "states", function(e) {
+    if (e.features.length > 0) {
+        if (hoveredStateId) {
+            map.setFeatureState({source: 'states', sourceLayer: 'State_wi2', id: hoveredStateId}, { hover: false});
+        }
+        hoveredStateId = e.features[0].id;
+        map.setFeatureState({source: 'states', sourceLayer: 'State_wi2', id: hoveredStateId}, { hover: true});
+    }
+});
+
+map.on("mouseleave", "states", function() {
+    if (hoveredStateId) {
+        map.setFeatureState({source: 'states', sourceLayer: 'State_wi2', id: hoveredStateId}, { hover: false});
+    }
+    hoveredStateId =  null;
+});
+
+map.addControl(new mapboxgl.NavigationControl());
+map.addControl(new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+}));
 
 </script>
 
