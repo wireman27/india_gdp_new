@@ -1,14 +1,44 @@
-#loader {
-    border: 8px solid #f3f3f3; /* Light grey */
-    border-top: 8px solid #ff9933; /* Blue */
-    border-radius: 1000%;
-    width: 60px;
-    height: 60px;
-    animation: spin 2s linear infinite;
-    display: none;
+body {
+	margin:0; 
+	padding:0;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+#links {
+	font-family: 'Montserrat', sans-serif;
+	position: absolute;
+	z-index: 1;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: transparent;
+}
+
+li {
+	float: left;
+}
+
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+li a:hover {
+	background-color: transparent;
+	color: #e6b800;
+}
+
+#map {
+	position:absolute;
+	top:0; bottom:0; width:100%; 
+}
+
+input {
+	font-family: 'Montserrat', sans-serif;
 }
