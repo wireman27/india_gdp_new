@@ -1,6 +1,7 @@
 body {
 	margin:0; 
 	padding:0;
+	background-color: black;
 }
 
 #links {
@@ -42,3 +43,27 @@ li a:hover {
 input {
 	font-family: 'Montserrat', sans-serif;
 }
+
+#cmap1 {
+	position:absolute;
+	top:0; bottom:0; width:49%;
+	display: none;
+}
+
+#cmap2 {
+	position:absolute;
+	top:0; bottom:0; right: 0px; width:49%;
+	display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+

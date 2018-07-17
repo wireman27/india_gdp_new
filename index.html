@@ -15,13 +15,21 @@
 
 <body>
 <div id="links">
-    <ul>
+    <ul class='docs'>
       <li><a href="https://github.com/wireman27/india_gdp_new" target="_blank">Github</a></li>
       <li><a href="https://wireman27.github.io/india_gdp_new/qgis_docs" target="_blank">QGIS Walkthrough</a></li>
       <li><a href="http://www.ngdc.noaa.gov/eog/pubs/Ghosh_TOGEOGJ.pdf" target="_blank">Original Paper</a></li>
+      <li><a href=javascript:compareTool() style='color:orange'>Compare States</a></li>
     </ul>
 </div>
+
+<div id='allmaps'>
+
 <div id='map'></div>
+<div class = 'comparemaps' id='cmap1'></div>
+<div class = 'comparemaps' id='cmap2'></div>
+
+</div>
 
 
 <script>
@@ -31,9 +39,9 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUyc
 // declaring some variables
 
 var states_tiles = 'wireman27.dzygdngz';
-var gdp_tiles = 'wireman27.bxpy8xv2';
+var gdp_tiles = 'wireman27.33q9yb3c';
 var states_layer = 'State_wi2';
-var gdp_layer = 'gdp4';
+var gdp_layer = 'gdpp_ws';
 var url = 'https://a.tiles.mapbox.com/v4/'+gdp_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
 var states_url = 'https://a.tiles.mapbox.com/v4/'+states_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
 var currentZoom = 5;
@@ -42,6 +50,14 @@ var bounds = [
     [50.22214724308444,7.167155470801902],
     [104.30007044563308,39.99115993534974]
 ];
+var is_compare_states = false;
+var states_select = 0;
+var selectedStates = [];
+var bbox_correct = [-3,-3,3,3];
+
+var links = document.getElementsByClassName("docs");
+var links2 = document.getElementById('links');
+var orig_links = links2.cloneNode(true);
 
 
 // initializing map
@@ -58,24 +74,26 @@ var map = new mapboxgl.Map({
     maxBounds: bounds
 });
 
+// declaring some functions
 
-function addGdp() {
-    map.addSource("gdp",{
+function addGdp(themap) {
+    themap.addSource("gdp",{
         "type":"vector",
         "tiles": [url],
         "cluster":true
     });
 }
 
-function addStates() {
-    map.addSource("states",{
+function addStates(themap) {
+    themap.addSource("states",{
         "type":"vector",
         "tiles": [states_url]
     });
 }
 
-function addDataLayer() {
-    map.addLayer({
+
+function addGdpLayer(themap) {
+    themap.addLayer({
         "id": "gdp-data",
         "type": "fill-extrusion",
         "source": "gdp",
@@ -91,23 +109,23 @@ function addDataLayer() {
                 [4000,'#660033']
                 ]
             },
-            // use an 'interpolate' expression to add a smooth transition effect to the
-            // buildings as the user zooms in
             'fill-extrusion-height': ["*",["get","gdpp_mill"], 10],
-            'fill-extrusion-opacity': 1
+            'fill-extrusion-opacity': 0.6
         }
     });
+}
 
-    map.addLayer({
+function addStatesLayer(themap) {
+    themap.addLayer({
         "id":"states",
         "type":"fill",
         "source": "states",
         "layout": {},
         "source-layer":states_layer,
         "paint": {
-            "fill-color": "#e6e600",
+            "fill-color": ["case", ["boolean",["feature-state", "click"],false], "#ffffff","#e6e600"],
             "fill-opacity": ["case",
-                ["boolean", ["feature-state", "hover"], false],
+                ["any", ["boolean", ["feature-state", "hover"], false], ["boolean", ["feature-state", "click"], false] ],
                 0.1,
                 0
             ]
@@ -115,11 +133,158 @@ function addDataLayer() {
     })
 }
 
+function addStatesBoundary(themap) {
+    themap.addLayer({
+        "id":"states-boundary",
+        "type":"line",
+        "source": "states",
+        "layout": {},
+        "source-layer":states_layer,
+        "paint": {
+            "line-color": "#e6e6e6",
+            "line-opacity": 0.5
+        }
+    })
+}
+
+function addDataLayer() {
+    addGdpLayer(map);
+    addStatesLayer(map);
+}
+
+//making the map pretty
+
 map.on('style.load', function () {
-    addGdp();
-    addStates();
+    addGdp(map);
+    addStates(map);
     addDataLayer();
 });
+
+// compare tool
+
+function backToHome() {
+    links2.replaceWith(orig_links);
+}
+
+function compareTool() {
+
+    // setting variables
+
+    is_compare_states = true;
+    var states_select = 0;
+
+    //initial user interface
+    document.getElementById("links").style.display = 'none'
+    document.getElementsByClassName("mapboxgl-control-container")[0].style.display = 'none';
+    document.getElementById('map').style.display = 'block'
+    links[0]["children"][0]["children"][0].innerText = 'Choose any two states';
+    document.getElementById("links").style.display = 'block';
+    for(i=2;i<4;i++) {
+        links[0]["children"][i]["children"][0].innerText = "";
+        links[0]["children"][i]["children"][0].href="";
+    }
+    links[0]["children"][1]["children"][0].innerText = 'Compare!';
+    links[0]["children"][1]["children"][0].setAttribute("style","color:orange");
+    links[0]["children"][1]["children"][0].href = 'javascript:compareStates()';
+    links[0]["children"][2]["children"][0].innerText = 'Back to Safety';
+    links[0]["children"][2]["children"][0].href = 'javascript:backToHome()';
+}
+
+function createBounds(turf_bounds) {
+    var sum = turf_bounds.map(function (num, idx) {
+        return num + bbox_correct[idx];
+    })
+    return(sum);
+}
+
+function goBackFromCompare() {
+    compareTool();
+
+    cmap1.remove();
+    cmap2.remove();
+
+    var maps = document.getElementById('allmaps')
+    var cmap1div = document.createElement("div")
+    var cmap2div = document.createElement("div")
+
+    cmap1div.classList.add('comparemaps')
+    cmap1div.setAttribute("id","cmap1")
+    cmap2div.classList.add('comparemaps')
+    cmap2div.setAttribute("id","cmap2")
+
+    maps.appendChild(cmap1div);
+    maps.appendChild(cmap2div);
+}
+
+function compareStates() {
+
+    if (states_select < 2) {
+        alert("Please select more states!");
+        return;
+    }
+
+    state1 = selectedStates[0]; state2 = selectedStates[1];
+    center1 = turf.center(state1.geometry).geometry.coordinates; center2 = turf.center(state2.geometry).geometry.coordinates;
+    bounds1 = createBounds(turf.bbox(state1)); bounds2 = createBounds(turf.bbox(state2));
+
+    links[0]["children"][0]["children"][0].innerText = ("Comparing "+state1.properties.Name+" and "+state2.properties.Name);
+    links[0]["children"][0]["children"][0].href = ""
+    links[0]["children"][1]["children"][0].innerText = "Go Back!"
+    links[0]["children"][1]["children"][0].href = "javascript:goBackFromCompare()"
+    links[0]["children"][2]["children"][0].innerText = ""
+    links[0]["children"][2]["children"][0].href = ""
+
+    document.getElementById('map').style.display = 'none';
+    document.getElementById('cmap1').style.display = 'block';
+    document.getElementById('cmap2').style.display = 'block';
+
+    var cmap1 = new mapboxgl.Map({
+        container: 'cmap1',
+        style: 'mapbox://styles/mapbox/dark-v9?optimize=true',
+        zoom: 5,
+        center: center1,
+        minZoom: 5,
+        maxBounds: bounds1
+    });
+
+    cmap1.on('load', function() {
+        addGdp(cmap1);
+        addGdpLayer(cmap1);
+        addStates(cmap1);
+        addStatesBoundary(cmap1);
+
+
+        var filter1 = ["==","state_id",state1.properties.St_Csus_Cd];
+
+        cmap1.setFilter('states-boundary',["==","St_Csus_Cd",state1.properties.St_Csus_Cd])
+        cmap1.setFilter('gdp-data',filter1);
+        
+    });
+
+    var cmap2 = new mapboxgl.Map({
+        container: 'cmap2',
+        style: 'mapbox://styles/mapbox/dark-v9?optimize=true',
+        zoom: 5,
+        center: center2,
+        minZoom: 5,
+        maxBounds: bounds2
+    });
+
+    cmap2.on('load', function() {
+        addGdp(cmap2);
+        addGdpLayer(cmap2);
+        addStates(cmap2);
+        addStatesBoundary(cmap2);
+
+        var filter2 = ["==","state_id",state2.properties.St_Csus_Cd];
+
+        cmap2.setFilter('states-boundary',["==","St_Csus_Cd",state2.properties.St_Csus_Cd])
+        cmap2.setFilter('gdp-data',filter2);
+    });
+
+}
+
+// events
 
 map.on('zoomend', function(){
     var zoomEnd = map.getZoom();
@@ -135,10 +300,29 @@ map.on('zoomend', function(){
 });
 
 map.on('click','states',function(e) {
-    if (hoveredStateId) {
+    if (hoveredStateId && !is_compare_states) {
         var bbox = turf.bbox(e.features[0]);
         map.fitBounds(bbox);
     }
+    if (is_compare_states && e.features.length > 0) {
+        var clickStat = map.getFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id}).click
+        if (clickStat != true) {
+            if (states_select < 2) {
+                map.setFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id},{click: true});
+                states_select++;
+                selectedStates.push(e.features[0]);
+            } 
+        } else {
+            map.setFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id},{click: false});
+            states_select--;
+            selectedStates.pop(e.features[0]);
+        }
+    };
+
+
+
+
+
 })
 
 map.on("mousemove", "states", function(e) {
