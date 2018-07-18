@@ -7,6 +7,7 @@
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
+    <script src='js/dom.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet'/>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
     <link href='css/styles.css' rel='stylesheet', type='text/css'/>
@@ -56,9 +57,6 @@ var selectedStates = [];
 var bbox_correct = [-3,-3,3,3];
 
 var links = document.getElementsByClassName("docs");
-var links2 = document.getElementById('links');
-var orig_links = links2.cloneNode(true);
-
 
 // initializing map
 
@@ -163,31 +161,22 @@ map.on('style.load', function () {
 // compare tool
 
 function backToHome() {
-    document.getElementById('links').replaceWith(orig_links);
+	backToHomeUI();
+	for (var feat = 0;feat < selectedStates.length;feat++) {
+		map.setFeatureState({source: 'states', sourceLayer: states_layer, id: selectedStates[feat].id},{click: false})
+	}
+	selectedStates = [];
+	states_select = 0;
+	is_compare_states = false;
+
 }
 
 function compareTool() {
 
-    // setting variables
-
     is_compare_states = true;
     var states_select = 0;
 
-    //initial user interface
-    document.getElementById("links").style.display = 'none'
-    document.getElementsByClassName("mapboxgl-control-container")[0].style.display = 'none';
-    document.getElementById('map').style.display = 'block'
-    links[0]["children"][0]["children"][0].innerText = 'Choose any two states';
-    document.getElementById("links").style.display = 'block';
-    for(i=2;i<4;i++) {
-        links[0]["children"][i]["children"][0].innerText = "";
-        links[0]["children"][i]["children"][0].href="";
-    }
-    links[0]["children"][1]["children"][0].innerText = 'Compare!';
-    links[0]["children"][1]["children"][0].setAttribute("style","color:orange");
-    links[0]["children"][1]["children"][0].href = 'javascript:compareStates()';
-    links[0]["children"][2]["children"][0].innerText = 'Back to Safety';
-    links[0]["children"][2]["children"][0].href = 'javascript:backToHome()';
+    compareToolUI();
 }
 
 function createBounds(turf_bounds) {
@@ -198,22 +187,13 @@ function createBounds(turf_bounds) {
 }
 
 function goBackFromCompare() {
+
     compareTool();
 
     cmap1.remove();
     cmap2.remove();
 
-    var maps = document.getElementById('allmaps')
-    var cmap1div = document.createElement("div")
-    var cmap2div = document.createElement("div")
-
-    cmap1div.classList.add('comparemaps')
-    cmap1div.setAttribute("id","cmap1")
-    cmap2div.classList.add('comparemaps')
-    cmap2div.setAttribute("id","cmap2")
-
-    maps.appendChild(cmap1div);
-    maps.appendChild(cmap2div);
+    goBackFromCompareUI();
 }
 
 function compareStates() {
@@ -227,16 +207,7 @@ function compareStates() {
     center1 = turf.center(state1.geometry).geometry.coordinates; center2 = turf.center(state2.geometry).geometry.coordinates;
     bounds1 = createBounds(turf.bbox(state1)); bounds2 = createBounds(turf.bbox(state2));
 
-    links[0]["children"][0]["children"][0].innerText = ("Comparing "+state1.properties.Name+" and "+state2.properties.Name);
-    links[0]["children"][0]["children"][0].href = ""
-    links[0]["children"][1]["children"][0].innerText = "Go Back!"
-    links[0]["children"][1]["children"][0].href = "javascript:goBackFromCompare()"
-    links[0]["children"][2]["children"][0].innerText = ""
-    links[0]["children"][2]["children"][0].href = ""
-
-    document.getElementById('map').style.display = 'none';
-    document.getElementById('cmap1').style.display = 'block';
-    document.getElementById('cmap2').style.display = 'block';
+    compareStatesUI();
 
     var cmap1 = new mapboxgl.Map({
         container: 'cmap1',
@@ -318,11 +289,6 @@ map.on('click','states',function(e) {
             selectedStates.pop(e.features[0]);
         }
     };
-
-
-
-
-
 })
 
 map.on("mousemove", "states", function(e) {
