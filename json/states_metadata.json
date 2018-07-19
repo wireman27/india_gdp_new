@@ -1,0 +1,362 @@
+{
+  "1": {
+    "Name": "Jammu & Kashmir",
+    "Name_T": "State",
+    "Area": 222363.3775,
+    "gsdp_lakhs": 9728927.06,
+    "agri_ratio": 0.148770395,
+    "gsdp": 973000000000,
+    "agri_gsdp": 145000000000,
+    "nonagri_gsdp": 828000000000
+  },
+  "2": {
+    "Name": "Himachal Pradesh",
+    "Name_T": "State",
+    "Area": 55725.92161,
+    "gsdp_lakhs": 9720666.031,
+    "agri_ratio": 0.141741644,
+    "gsdp": 972000000000,
+    "agri_gsdp": 138000000000,
+    "nonagri_gsdp": 834000000000
+  },
+  "3": {
+    "Name": "Punjab",
+    "Name_T": "State",
+    "Area": 50393.35834,
+    "gsdp_lakhs": 32897315.18,
+    "agri_ratio": 0.242241575,
+    "gsdp": 3290000000000,
+    "agri_gsdp": 797000000000,
+    "nonagri_gsdp": 2490000000000
+  },
+  "4": {
+    "Name": "Chandigarh",
+    "Name_T": "Union Territory",
+    "Area": 118.3035898,
+    "gsdp_lakhs": 2453718.29,
+    "agri_ratio": 0.005095991,
+    "gsdp": 245000000000,
+    "agri_gsdp": 1248517795,
+    "nonagri_gsdp": 244000000000
+  },
+  "5": {
+    "Name": "Uttarakhand",
+    "Name_T": "State",
+    "Area": 53877.30031,
+    "gsdp_lakhs": 15190072.61,
+    "agri_ratio": 0.08642896,
+    "gsdp": 1520000000000,
+    "agri_gsdp": 131000000000,
+    "nonagri_gsdp": 1390000000000
+  },
+  "6": {
+    "Name": "Haryana",
+    "Name_T": "State",
+    "Area": 44107.77393,
+    "gsdp_lakhs": 39964593.71,
+    "agri_ratio": 0.164215661,
+    "gsdp": 4000000000000,
+    "agri_gsdp": 657000000000,
+    "nonagri_gsdp": 3340000000000
+  },
+  "7": {
+    "Name": "NCT of Delhi",
+    "Name_T": "Union Territory",
+    "Area": 1504.359974,
+    "gsdp_lakhs": 47405771.57,
+    "agri_ratio": 0.00349713,
+    "gsdp": 4740000000000,
+    "agri_gsdp": 16576396200,
+    "nonagri_gsdp": 4720000000000
+  },
+  "8": {
+    "Name": "Rajasthan",
+    "Name_T": "State",
+    "Area": 342592.8684,
+    "gsdp_lakhs": 55814432.81,
+    "agri_ratio": 0.244607916,
+    "gsdp": 5580000000000,
+    "agri_gsdp": 1360000000000,
+    "nonagri_gsdp": 4220000000000
+  },
+  "9": {
+    "Name": "Uttar Pradesh",
+    "Name_T": "State",
+    "Area": 242646.0191,
+    "gsdp_lakhs": 90164491,
+    "agri_ratio": 0.216042699,
+    "gsdp": 9020000000000,
+    "agri_gsdp": 1950000000000,
+    "nonagri_gsdp": 7070000000000
+  },
+  "10": {
+    "Name": "Bihar",
+    "Name_T": "State",
+    "Area": 96745.36345,
+    "gsdp_lakhs": 30056608.57,
+    "agri_ratio": 0.202734492,
+    "gsdp": 3010000000000,
+    "agri_gsdp": 610000000000,
+    "nonagri_gsdp": 2400000000000
+  },
+  "11": {
+    "Name": "Sikkim",
+    "Name_T": "State",
+    "Area": 7448.746665,
+    "gsdp_lakhs": 1408684.154,
+    "agri_ratio": 0.069511777,
+    "gsdp": 141000000000,
+    "agri_gsdp": 9801160557,
+    "nonagri_gsdp": 131000000000
+  },
+  "12": {
+    "Name": "Arunanchal Pradesh",
+    "Name_T": "State",
+    "Area": 90090.2398,
+    "gsdp_lakhs": 1666248,
+    "agri_ratio": 0.306068484,
+    "gsdp": 167000000000,
+    "agri_gsdp": 51113436828,
+    "nonagri_gsdp": 116000000000
+  },
+  "13": {
+    "Name": "Nagaland",
+    "Name_T": "State",
+    "Area": 18228.93281,
+    "gsdp_lakhs": 1485110.973,
+    "agri_ratio": 0.282346647,
+    "gsdp": 149000000000,
+    "agri_gsdp": 42069650403,
+    "nonagri_gsdp": 107000000000
+  },
+  "14": {
+    "Name": "Manipur",
+    "Name_T": "State",
+    "Area": 24411.99543,
+    "gsdp_lakhs": 1585639.22,
+    "agri_ratio": 0.17084228,
+    "gsdp": 159000000000,
+    "agri_gsdp": 27163922520,
+    "nonagri_gsdp": 132000000000
+  },
+  "15": {
+    "Name": "Mizoram",
+    "Name_T": "State",
+    "Area": 22907.97054,
+    "gsdp_lakhs": 1248773.4,
+    "agri_ratio": 0.273308323,
+    "gsdp": 125000000000,
+    "agri_gsdp": 34163540375,
+    "nonagri_gsdp": 90836459625
+  },
+  "16": {
+    "Name": "Tripura",
+    "Name_T": "State",
+    "Area": 11216.60415,
+    "gsdp_lakhs": 2782030,
+    "agri_ratio": 0.237543808,
+    "gsdp": 278000000000,
+    "agri_gsdp": 66037178624,
+    "nonagri_gsdp": 212000000000
+  },
+  "17": {
+    "Name": "Meghalaya",
+    "Name_T": "State",
+    "Area": 23976.47194,
+    "gsdp_lakhs": 2175648.569,
+    "agri_ratio": 0.159679741,
+    "gsdp": 218000000000,
+    "agri_gsdp": 34810183538,
+    "nonagri_gsdp": 183000000000
+  },
+  "18": {
+    "Name": "Assam",
+    "Name_T": "State",
+    "Area": 84879.61047,
+    "gsdp_lakhs": 17892964.35,
+    "agri_ratio": 0.190413055,
+    "gsdp": 1790000000000,
+    "agri_gsdp": 341000000000,
+    "nonagri_gsdp": 1450000000000
+  },
+  "19": {
+    "Name": "West Bengal",
+    "Name_T": "State",
+    "Area": 89034.00781,
+    "gsdp_lakhs": 76217915.81,
+    "agri_ratio": 0.186036381,
+    "gsdp": 7620000000000,
+    "agri_gsdp": 1420000000000,
+    "nonagri_gsdp": 6200000000000
+  },
+  "20": {
+    "Name": "Jharkhand",
+    "Name_T": "State",
+    "Area": 82172.03781,
+    "gsdp_lakhs": 19753560,
+    "agri_ratio": 0.113891319,
+    "gsdp": 1980000000000,
+    "agri_gsdp": 226000000000,
+    "nonagri_gsdp": 1750000000000
+  },
+  "21": {
+    "Name": "Odisha",
+    "Name_T": "State",
+    "Area": 159599.6415,
+    "gsdp_lakhs": 29279239.97,
+    "agri_ratio": 0.139146239,
+    "gsdp": 2930000000000,
+    "agri_gsdp": 408000000000,
+    "nonagri_gsdp": 2520000000000
+  },
+  "22": {
+    "Name": "Chhattisgarh",
+    "Name_T": "State",
+    "Area": 136936.1916,
+    "gsdp_lakhs": 20901171.54,
+    "agri_ratio": 0.145382616,
+    "gsdp": 2090000000000,
+    "agri_gsdp": 304000000000,
+    "nonagri_gsdp": 1790000000000
+  },
+  "23": {
+    "Name": "Madhya Pradesh",
+    "Name_T": "State",
+    "Area": 309060.719,
+    "gsdp_lakhs": 40797001,
+    "agri_ratio": 0.292421347,
+    "gsdp": 4080000000000,
+    "agri_gsdp": 1190000000000,
+    "nonagri_gsdp": 2890000000000
+  },
+  "24": {
+    "Name": "Gujarat",
+    "Name_T": "State",
+    "Area": 186301.7121,
+    "gsdp_lakhs": 89466723.29,
+    "agri_ratio": 0.12683464,
+    "gsdp": 8950000000000,
+    "agri_gsdp": 1140000000000,
+    "nonagri_gsdp": 7810000000000
+  },
+  "25": {
+    "Name": "Daman & Diu",
+    "Name_T": "Union Territory",
+    "Area": 109.3622659,
+    "gsdp_lakhs": "",
+    "agri_ratio": "",
+    "gsdp": "",
+    "agri_gsdp": "",
+    "nonagri_gsdp": ""
+  },
+  "26": {
+    "Name": "Dadara & Nagar Havelli",
+    "Name_T": "Union Territory",
+    "Area": 493.5154552,
+    "gsdp_lakhs": "",
+    "agri_ratio": "",
+    "gsdp": "",
+    "agri_gsdp": "",
+    "nonagri_gsdp": ""
+  },
+  "27": {
+    "Name": "Maharashtra",
+    "Name_T": "State",
+    "Area": 307879.7433,
+    "gsdp_lakhs": 165977605,
+    "agri_ratio": 0.084274898,
+    "gsdp": 16600000000000,
+    "agri_gsdp": 1400000000000,
+    "nonagri_gsdp": 15200000000000
+  },
+  "28": {
+    "Name": "Andhra Pradesh",
+    "Name_T": "State",
+    "Area": 161289.5815,
+    "gsdp_lakhs": 49013409.05,
+    "agri_ratio": 0.24840792,
+    "gsdp": 4900000000000,
+    "agri_gsdp": 1220000000000,
+    "nonagri_gsdp": 3680000000000
+  },
+  "29": {
+    "Name": "Karnataka",
+    "Name_T": "State",
+    "Area": 191707.41,
+    "gsdp_lakhs": 81349740.92,
+    "agri_ratio": 0.087447717,
+    "gsdp": 8130000000000,
+    "agri_gsdp": 711000000000,
+    "nonagri_gsdp": 7420000000000
+  },
+  "30": {
+    "Name": "Goa",
+    "Name_T": "State",
+    "Area": 3627.402101,
+    "gsdp_lakhs": 4471727.959,
+    "agri_ratio": 0.050169122,
+    "gsdp": 447000000000,
+    "agri_gsdp": 22425597534,
+    "nonagri_gsdp": 425000000000
+  },
+  "31": {
+    "Name": "Lakshadweep",
+    "Name_T": "Union Territory",
+    "Area": 663.6222355,
+    "gsdp_lakhs": "",
+    "agri_ratio": "",
+    "gsdp": "",
+    "agri_gsdp": "",
+    "nonagri_gsdp": ""
+  },
+  "32": {
+    "Name": "Kerala",
+    "Name_T": "State",
+    "Area": 38808.80174,
+    "gsdp_lakhs": 44769236.52,
+    "agri_ratio": 0.097552737,
+    "gsdp": 4480000000000,
+    "agri_gsdp": 437000000000,
+    "nonagri_gsdp": 4040000000000
+  },
+  "33": {
+    "Name": "Tamil Nadu",
+    "Name_T": "State",
+    "Area": 130237.8327,
+    "gsdp_lakhs": 94867384.58,
+    "agri_ratio": 0.106573042,
+    "gsdp": 9490000000000,
+    "agri_gsdp": 1010000000000,
+    "nonagri_gsdp": 8480000000000
+  },
+  "34": {
+    "Name": "Puducherry",
+    "Name_T": "Union Territory",
+    "Area": 504.1548337,
+    "gsdp_lakhs": 2003237,
+    "agri_ratio": 0.045253334,
+    "gsdp": 200000000000,
+    "agri_gsdp": 9050666800,
+    "nonagri_gsdp": 191000000000
+  },
+  "35": {
+    "Name": "Andaman & Nicobar Island",
+    "Name_T": "Union Territory",
+    "Area": 8252.308737,
+    "gsdp_lakhs": 513318.9571,
+    "agri_ratio": 0.136579296,
+    "gsdp": 51331895710,
+    "agri_gsdp": 7010874178,
+    "nonagri_gsdp": 44321021532
+  },
+  "36": {
+    "Name": "Telangana",
+    "Name_T": "State",
+    "Area": 115158.9915,
+    "gsdp_lakhs": 45206329,
+    "agri_ratio": 0.115379995,
+    "gsdp": 4520000000000,
+    "agri_gsdp": 522000000000,
+    "nonagri_gsdp": 4000000000000
+  }
+}
