@@ -1,18 +1,23 @@
-function changeListElement(number, text="", link="",attributeKey="style",attributeValue="") {
+function changeListElement(number, text="", link="#",attributeKey="style",attributeValue="",removeHref) {
 	links[0]["children"][number]["children"][0].innerText = text
 	links[0]["children"][number]["children"][0].href = link
 	links[0]["children"][number]["children"][0].setAttribute(attributeKey,attributeValue)
+
+    console.log(removeHref)
+    if(removeHref==true) {
+        links[0]["children"][number]["children"][0].removeAttribute('href');
+    }
 }
 
 function compareToolUI() {
     document.getElementsByClassName("mapboxgl-control-container")[0].style.display = 'none';
     document.getElementById('map').style.display = 'block';
-    changeListElement(0, "Choose any two states");
+    changeListElement(0, "Choose any two states",undefined,undefined,undefined,removeHref=true);
     for(i=2;i<4;i++) {
         changeListElement(i)
     }
     changeListElement(1,"Compare!","javascript:compareStates()","style","color:orange")
-    changeListElement(2,"Back to Safety","javascript:backToHome()")
+    changeListElement(2,"Back to Home","javascript:backToHome()")
 }
 
 function goBackFromCompareUI() {
@@ -27,12 +32,14 @@ function goBackFromCompareUI() {
 
     maps.appendChild(cmap1div);
     maps.appendChild(cmap2div);
+
+    document.getElementById('container').removeChild(document.getElementById('compareTable'))
 }
 
 function compareStatesUI() {
     var comparedStates = "Comparing "+state1.properties.Name+" and "+state2.properties.Name
 
-    changeListElement(0, comparedStates,"")
+    changeListElement(number=0, text=comparedStates,link="#",undefined,undefined,removeHref=true);
     changeListElement(1,"Go Back!","javascript:goBackFromCompare()")
     changeListElement(2)
 

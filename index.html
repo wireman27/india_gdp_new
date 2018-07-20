@@ -30,6 +30,7 @@
 <div class = 'comparemaps' id='cmap1'></div>
 <div class = 'comparemaps' id='cmap2'></div>
 </div>
+</div>
 <script>
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUycHRnMzNuaW14eHE5d24yIn0.0ty0jyl5uuIF4fulta_vjg';
@@ -59,7 +60,7 @@ var compareAttributes = {
     "agri_ratio":"GSDP Attributable to Agriculture"
 }
 
-var table = document.createElement('table');
+var table;
 
 var statesMetadata; 
 var statesMetadataUrl = 'https://raw.githubusercontent.com/wireman27/india_gdp_new/master/json/statesMetadata.json'
@@ -276,9 +277,17 @@ function compareStates() {
 
     createComparisonTable();
 
+
+}
+
+function round(value, decimals) {
+  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
 function createComparisonTable() {
+
+    table = document.createElement('table');
+    table.setAttribute('id','compareTable');
 
     for (var att in compareAttributes) {
         var row = document.createElement('tr');
@@ -286,9 +295,9 @@ function createComparisonTable() {
         var td1 = document.createElement('td'); var td2 = document.createElement('td'); var td3 = document.createElement('td'); 
         td1.setAttribute('class','td1');td2.setAttribute('class','td2');td3.setAttribute('class','td3');
 
-        td1.innerText = statesMetadata[selectedStates[0].id][att];
-        td2.innerText = compareAttributes[att];
-        td3.innerText = statesMetadata[selectedStates[1].id][att];
+        td1.innerText = round(statesMetadata[selectedStates[0].id][att],2);
+        td2.innerText = compareAttributes[att]
+        td3.innerText = round(statesMetadata[selectedStates[1].id][att],2);
 
         row.appendChild(td1); row.appendChild(td2); row.appendChild(td3);
 
