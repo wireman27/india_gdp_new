@@ -38,11 +38,17 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUyc
 // declaring some variables
 
 var states_tiles = 'wireman27.dzygdngz';
-var gdp_tiles = 'wireman27.33q9yb3c';
 var states_layer = 'State_wi2';
+var states_url = 'https://a.tiles.mapbox.com/v4/'+states_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
+
+var gdp_tiles = 'wireman27.33q9yb3c';
 var gdp_layer = 'gdpp_ws';
 var url = 'https://a.tiles.mapbox.com/v4/'+gdp_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
-var states_url = 'https://a.tiles.mapbox.com/v4/'+states_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
+
+var airlinks_tiles = 'wireman27.ajp9l3mx';
+var airlinks_layer = 'airlinks';
+var airlinks_url = 'https://a.tiles.mapbox.com/v4/'+airlinks_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
+
 var currentZoom = 5;
 var hoveredStateId =  null;
 var bounds = [
@@ -99,6 +105,13 @@ function addStates(themap) {
     });
 }
 
+function addAirlinks(themap) {
+    themap.addSource("airlinks",{
+        "type":"vector",
+        "tiles": [airlinks_url]
+    });
+}
+
 
 function addGdpLayer(themap) {
     themap.addLayer({
@@ -141,6 +154,21 @@ function addStatesLayer(themap) {
     })
 }
 
+function addAirlinksLayer(themap) {
+    themap.addLayer({
+        "id":"airlinks",
+        "type":"line",
+        "source": "airlinks",
+        "layout": {},
+        "source-layer":airlinks_layer,
+        "paint": {
+            "line-color": "black",
+            "line-width":0.5,
+            "line-opacity":0.3
+        }
+    })
+}
+
 function addStatesBoundary(themap) {
     themap.addLayer({
         "id":"states-boundary",
@@ -158,6 +186,7 @@ function addStatesBoundary(themap) {
 function addDataLayer() {
     addGdpLayer(map);
     addStatesLayer(map);
+    addAirlinksLayer(map);
 }
 
 //making the map pretty
@@ -165,6 +194,7 @@ function addDataLayer() {
 map.on('style.load', function () {
     addGdp(map);
     addStates(map);
+    addAirlinks(map);
     addDataLayer();
 });
 

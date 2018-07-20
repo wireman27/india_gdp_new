@@ -40,8 +40,8 @@ function compareStatesUI() {
     var comparedStates = "Comparing "+state1.properties.Name+" and "+state2.properties.Name
 
     changeListElement(number=0, text=comparedStates,link="#",undefined,undefined,removeHref=true);
-    changeListElement(1,"Go Back!","javascript:goBackFromCompare()")
-    changeListElement(2)
+    changeListElement(1,"Go Back!","javascript:goBackFromCompare()",'color','orange');
+    changeListElement(2);
 
     document.getElementById('map').style.display = 'none';
     document.getElementById('cmap1').style.display = 'block';
