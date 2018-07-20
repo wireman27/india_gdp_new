@@ -54,8 +54,8 @@ var selectedStates = [];
 var bbox_correct = [-3,-3,3,3];
 
 var compareAttributes = {
-    "gsdp":"Gross State Domestic Product",
-    "gsdp_sqkm": "GSDP Per Sq Km",
+    "gsdp_mill":"Gross State Domestic Product (Million)",
+    "gsdp_sqkm_mill": "GSDP (Million) Per Sq Km",
     "agri_ratio":"GSDP Attributable to Agriculture"
 }
 
@@ -296,6 +296,12 @@ function createComparisonTable() {
     }
 
     document.getElementById('container').appendChild(table);
+
+    document.getElementsByClassName("mapboxgl-ctrl-attrib")[1].style.display = 'none';
+    document.getElementsByClassName("mapboxgl-ctrl-logo")[1].style.display = 'none';
+    document.getElementsByClassName("mapboxgl-ctrl-attrib")[2].style.display = 'none';
+    document.getElementsByClassName("mapboxgl-ctrl-logo")[2].style.display = 'none';
+
 }
 // events
 
