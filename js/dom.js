@@ -18,6 +18,9 @@ function compareToolUI() {
     }
     changeListElement(1,"Compare!","javascript:compareStates()","style","color:orange")
     changeListElement(2,"Back to Home","javascript:backToHome()")
+
+    document.getElementById('controls').style.display = 'none';
+    console.log('hit this');
 }
 
 function goBackFromCompareUI() {
@@ -57,5 +60,8 @@ function backToHomeUI() {
 	changeListElement(3, "Compare States","javascript:compareTool()", "style", "color:orange")
 
 	document.getElementsByClassName("mapboxgl-control-container")[0].style.display = 'block';
+
+    document.getElementById('controls').style.display = 'block';
+    console.log('hit this as well');
 
 }

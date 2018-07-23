@@ -37,7 +37,7 @@
         <li id='airlinks-toggle'>
             <input type="checkbox" id="airlinks"  onclick="toggleLayer(this.id)">
             <p class='tooltip'>Air Links
-            <span class='tooltiptext'>Air links weighted by total weekly passenger capacity based on summer schedule data from DGCA. More info <a href='http://dgca.nic.in/dom_flt_schedule/flt_index.htm' target='_blank'>here</a> </span>
+            <span class='tooltiptext'>Air links weighted by total weekly passenger capacity based on summer schedule <a href='http://dgca.nic.in/dom_flt_schedule/flt_index.htm' target='_blank'>data</a> from the DGCA.</span>
             </p>
         </li>
         <li id='states-boundary-toggle'>
@@ -84,8 +84,8 @@ var selectedStates = [];
 var bbox_correct = [-3,-3,3,3];
 
 var compareAttributes = {
-    "gsdp_mill":"Gross State Domestic Product (Million)",
-    "gsdp_sqkm_mill": "GSDP (Million) Per Sq Km",
+    "gsdp_mill":"Gross State Domestic Product (INR Million)",
+    "gsdp_sqkm_mill": "GSDP (INR Million) Per Sq Km",
     "agri_ratio":"GSDP Attributable to Agriculture"
 }
 
@@ -339,9 +339,27 @@ function compareStates() {
 
 }
 
+function stringGenerator(attribute, value) {
+    if (attribute == "gsdp_mill") {
+        return(numberWithCommas(value));       
+    }
+    if (attribute == "agri_ratio") {
+        return(round(value * 100,2).toString() + "%");
+    }
+    if (attribute == "gsdp_sqkm_mill") {
+        return((round(value,2)).toString());
+    } else {
+        return(value);
+    }
+}
+
 function round(value, decimals) {
   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
+
+const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+};
 
 function createComparisonTable() {
 
@@ -354,9 +372,9 @@ function createComparisonTable() {
         var td1 = document.createElement('td'); var td2 = document.createElement('td'); var td3 = document.createElement('td'); 
         td1.setAttribute('class','td1');td2.setAttribute('class','td2');td3.setAttribute('class','td3');
 
-        td1.innerText = round(statesMetadata[selectedStates[0].id][att],2);
-        td2.innerText = compareAttributes[att]
-        td3.innerText = round(statesMetadata[selectedStates[1].id][att],2);
+        td1.innerText = stringGenerator(att,statesMetadata[selectedStates[0].id][att]);
+        td2.innerText = compareAttributes[att];
+        td3.innerText = stringGenerator(att,statesMetadata[selectedStates[1].id][att]);
 
         row.appendChild(td1); row.appendChild(td2); row.appendChild(td3);
 

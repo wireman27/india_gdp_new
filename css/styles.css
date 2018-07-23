@@ -34,7 +34,7 @@ div#controls h3 {
 	z-index: 5;
     width: 10px;
     height: 50px; /* as the half of the width */
-    background-color: black;
+    background-color: white;
     border-top-right-radius: 20px;  /* 100px of height + 10px of border */
     border-bottom-right-radius: 20px; /* 100px of height + 10px of border */
     border: 1px solid gray;
@@ -112,6 +112,7 @@ input:nth-child(3) {
 .tooltiptext a {
 	text-decoration: none;
 	border-bottom: 1px dotted white;
+	color: white;
 }
 
 .tooltip .tooltiptext {
