@@ -25,6 +25,29 @@
     </ul>
 </div>
 
+<div id='control-toggle' onclick='toggleControls()'></div>
+
+<div id='controls'>
+    <h3>Toggle Layers</h3>
+    <ul class='toggle'>
+        <li id='gdp-data-toggle'>
+            <input type="checkbox" id="gdp-data"  onclick="toggleLayer(this.id)">
+            GDP
+        </li>
+        <li id='airlinks-toggle'>
+            <input type="checkbox" id="airlinks"  onclick="toggleLayer(this.id)">
+            <p class='tooltip'>Air Links
+            <span class='tooltiptext'>Air links weighted by total weekly passenger capacity based on summer schedule data from DGCA. More info <a href='http://dgca.nic.in/dom_flt_schedule/flt_index.htm' target='_blank'>here</a> </span>
+            </p>
+        </li>
+        <li id='states-boundary-toggle'>
+            <input type="checkbox" id="states-boundary"  onclick="toggleLayer(this.id)">
+            State Boundaries
+        </li>
+    </ul>
+</div>
+
+
 <div id='allmaps'>
 <div id='map'></div>
 <div class = 'comparemaps' id='cmap1'></div>
@@ -78,7 +101,7 @@ var links = document.getElementsByClassName("docs");
 
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v9?optimize=true',
+    style: 'mapbox://styles/wireman27/cjjxpgblc4lco2spl206pi2d9',
     zoom: 4,
     center: [77.645, 21.69],
     pitch: 0,
@@ -159,12 +182,14 @@ function addAirlinksLayer(themap) {
         "id":"airlinks",
         "type":"line",
         "source": "airlinks",
-        "layout": {},
+        "layout": {
+            "visibility":'none'
+        },
         "source-layer":airlinks_layer,
         "paint": {
             "line-color": "black",
-            "line-width":0.5,
-            "line-opacity":0.3
+            "line-width":["/",["get","twc"], 20000],
+            "line-opacity": 0.5
         }
     })
 }
@@ -177,8 +202,9 @@ function addStatesBoundary(themap) {
         "layout": {},
         "source-layer":states_layer,
         "paint": {
+            "line-width": 0.3,
             "line-color": "#e6e6e6",
-            "line-opacity": 0.5
+            "line-opacity": 0.6
         }
     })
 }
@@ -187,6 +213,7 @@ function addDataLayer() {
     addGdpLayer(map);
     addStatesLayer(map);
     addAirlinksLayer(map);
+    addStatesBoundary(map);
 }
 
 //making the map pretty
@@ -195,6 +222,8 @@ map.on('style.load', function () {
     addGdp(map);
     addStates(map);
     addAirlinks(map);
+    document.getElementById('gdp-data').checked = true;
+    document.getElementById('states-boundary').checked = true;
     addDataLayer();
 });
 
@@ -342,20 +371,40 @@ function createComparisonTable() {
     document.getElementsByClassName("mapboxgl-ctrl-logo")[2].style.display = 'none';
 
 }
+
+function toggleLayer(layerName) {
+    if(map.getLayoutProperty(layerName, 'visibility') == 'none') {
+        map.setLayoutProperty(layerName,'visibility','visible')
+    } else {
+        map.setLayoutProperty(layerName,'visibility','none')
+    }
+}
+
+function toggleControls() {
+    if (document.getElementById('controls').style.display=='none') {
+        document.getElementById('controls').style.display = 'block';
+    } else {
+        document.getElementById('controls').style.display = 'none';
+    }
+}
+
+
 // events
 
-map.on('zoomend', function(){
-    var zoomEnd = map.getZoom();
-    if(currentZoom < 9.5 && zoomEnd > 9.5) { 
-        //document.getElementById('loader').style.display = 'block';
-        map.setStyle('mapbox://styles/mapbox/satellite-v9?optimize=true')
-        currentZoom = zoomEnd;
-    }
-    if(currentZoom > 9.5 && zoomEnd < 9.5) { 
-        map.setStyle('mapbox://styles/mapbox/dark-v9?optimize=true')
-        currentZoom = zoomEnd;
-    }
-});
+
+
+// map.on('zoomend', function(){
+//     var zoomEnd = map.getZoom();
+//     if(currentZoom < 9.5 && zoomEnd > 9.5) { 
+//         //document.getElementById('loader').style.display = 'block';
+//         map.setStyle('mapbox://styles/mapbox/satellite-v9?optimize=true')
+//         currentZoom = zoomEnd;
+//     }
+//     if(currentZoom > 9.5 && zoomEnd < 9.5) { 
+//         map.setStyle('mapbox://styles/mapbox/dark-v9?optimize=true')
+//         currentZoom = zoomEnd;
+//     }
+// });
 
 map.on('click','states',function(e) {
     if (hoveredStateId && !is_compare_states) {
@@ -379,16 +428,23 @@ map.on('click','states',function(e) {
 })
 
 map.on("mousemove", "states", function(e) {
+    if(map.getZoom() > 7) {
+        map.setFeatureState({source: 'states', sourceLayer: states_layer, id: hoveredStateId}, { hover: false});
+    } else {
     if (e.features.length > 0) {
         if (hoveredStateId) {
             map.setFeatureState({source: 'states', sourceLayer: states_layer, id: hoveredStateId}, { hover: false});
         }
         hoveredStateId = e.features[0].id;
         map.setFeatureState({source: 'states', sourceLayer: states_layer, id: hoveredStateId}, { hover: true});
+    }        
     }
 });
 
-map.on("mouseleave", "states", function() {
+map.on("mouseleave", "states", function() {   
+    if(map.getZoom() > 7) {
+        map.setFeatureState({source: 'states', sourceLayer: states_layer, id: hoveredStateId}, { hover: false});
+    }
     if (hoveredStateId) {
         map.setFeatureState({source: 'states', sourceLayer: states_layer, id: hoveredStateId}, { hover: false});
     }
@@ -396,7 +452,8 @@ map.on("mouseleave", "states", function() {
 });
 
 map.addControl(new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken
+    accessToken: mapboxgl.accessToken,
+    country: 'in'
 }));
 // map.addControl(new mapboxgl.FullscreenControl());
 

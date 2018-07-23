@@ -4,25 +4,163 @@ body {
 	background-color: black;
 }
 
+div#controls {
+	position: fixed;
+	left: 2%;
+	top: 35%;
+	font-family: 'Montserrat', sans-serif;
+	z-index: 5;
+	color:white;
+	width: 20%;
+	height: 30%;
+}
+
+div#controls ul {
+	list-style-type: none;
+	padding: 5%;
+}
+
+div#controls h3 {
+	padding:5%;
+}
+
+#minimize {
+	padding-left: 70%;
+}
+
+#control-toggle {
+	position: absolute;
+	top: 50%;
+	z-index: 5;
+    width: 10px;
+    height: 50px; /* as the half of the width */
+    background-color: black;
+    border-top-right-radius: 20px;  /* 100px of height + 10px of border */
+    border-bottom-right-radius: 20px; /* 100px of height + 10px of border */
+    border: 1px solid gray;
+    border-bottom: 0;
+}
+
+#control-toggle:hover {
+	background-color: orange;
+	cursor:pointer;
+}
+
+
+/*toggling buttons*/
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+input {
+  position: relative;
+  margin-left:0px;
+  margin-right: 5px;
+  border-radius: 20px;
+  background: #999;
+  outline: 0;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+input::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  display: block;
+  width: calc((100% - 4px) / 2);
+  height: calc(100% - 4px);
+  border-radius: 50%;
+  background: #eee;
+  transition: all 0.1s linear;
+}
+
+input:checked {
+  background: orange;
+}
+
+input:checked::after {
+  transform: translateX(100%);
+}
+
+input:nth-child(1) {
+  width: 36px;
+  height: 22px;
+}
+input:nth-child(2) {
+  width: 36px;
+  height: 22px;
+}
+input:nth-child(3) {
+  width: 36px;
+  height: 22px;
+}
+
+/*toggling buttons*/
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted white;
+}
+
+.tooltiptext a {
+	text-decoration: none;
+	border-bottom: 1px dotted white;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 2%;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    font-size: 12px;
+}
+
+#controls {
+	border-radius: 25px;
+	border: 1px solid black;
+	background-color: rgb(0, 0, 0, 0.4);
+}
+
 #links {
 	font-family: 'Montserrat', sans-serif;
 	position: absolute;
 	z-index: 2;
 }
 
-ul {
+ul.docs {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
 	background-color: transparent;
+	font-family: 'Montserrat', sans-serif;
 }
 
-li {
+ul.docs li {
 	float: left;
 }
 
-li a {
+ul.docs li a {
 	display: block;
 	color: white;
 	text-align: center;
@@ -30,7 +168,7 @@ li a {
 	text-decoration: none;
 }
 
-li a:hover {
+ul.docs li a:hover {
 	background-color: transparent;
 	color: #e6b800;
 }
@@ -88,6 +226,8 @@ table {
 	text-align:center;
 	color:orange;
 }
+
+
 
 
 
