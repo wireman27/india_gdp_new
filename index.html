@@ -16,47 +16,60 @@
 </head>
 
 <body>
+
 <div id='container'>
-<div id="links">
-    <ul class='docs'>
-      <li><a href="https://github.com/wireman27/india_gdp_new" target="_blank">Github</a></li>
-      <li><a href="https://wireman27.github.io/india_gdp_new/qgis_docs" target="_blank">QGIS Walkthrough</a></li>
-      <li><a href="http://www.ngdc.noaa.gov/eog/pubs/Ghosh_TOGEOGJ.pdf" target="_blank">Original Paper</a></li>
-      <li><a href=javascript:compareTool() style='color:orange'>Compare States</a></li>
-    </ul>
-</div>
+    <div id="links">
+        <ul class='docs'>
+          <li><a href="https://github.com/wireman27/india_gdp_new" target="_blank">Github</a></li>
+          <li><a href="https://wireman27.github.io/india_gdp_new/qgis_docs" target="_blank">QGIS Walkthrough</a></li>
+          <li><a href="http://www.ngdc.noaa.gov/eog/pubs/Ghosh_TOGEOGJ.pdf" target="_blank">Original Paper</a></li>
+          <li><a href=javascript:compareTool() style='color:orange'>Compare States</a></li>
+        </ul>
+    </div>
 
-<div id='control-toggle' onclick='toggleControls()'></div>
+    <div id='control-toggle' onclick='toggleControls()'></div>
 
-<div id='controls'>
-    <h3>Toggle Layers</h3>
-    <ul class='toggle'>
-        <li id='gdp-data-toggle'>
-            <input type="checkbox" id="gdp-data"  onclick="toggleLayer(this.id)">
-            GDP
-        </li>
-        <li id='airlinks-toggle'>
-            <input type="checkbox" id="airlinks"  onclick="toggleLayer(this.id)">
-            <p class='tooltip'>Air Links
-            <span class='tooltiptext'>Air links weighted by total weekly passenger capacity on a given route based on summer schedule <a href='http://dgca.nic.in/dom_flt_schedule/flt_index.htm' target='_blank'>data</a> from the DGCA.</span>
-            </p>
-        </li>
-        <li id='states-boundary-toggle'>
-            <input type="checkbox" id="states-boundary"  onclick="toggleLayer(this.id)">
-            State Boundaries
-        </li>
-    </ul>
-    <h3>Airlinks Filter</h3>
-    <div id='slider'></div>
-    <div class='filter-info' id='airlinks-filter'></div>
-</div>
+    <div id='controls'>
+        <h3>Toggle Layers</h3>
+        <ul class='toggle'>
+            <li id='gdp-data-toggle'>
+                <input type="checkbox" id="gdp-data"  onclick="toggleLayer(this.id)">
+                GDP
+            </li>
+            <li id='airlinks-toggle'>
+                <input type="checkbox" id="airlinks"  onclick="toggleLayer(this.id)">
+                <p class='tooltip'>Airlinks
+                <span class='tooltiptext'>Air links weighted by total weekly passenger capacity on a given route based on summer schedule <a href='http://dgca.nic.in/dom_flt_schedule/flt_index.htm' target='_blank'>data</a> from the DGCA.</span>
+                </p>
+            </li>
+            <li id='states-boundary-toggle'>
+                <input type="checkbox" id="states-boundary"  onclick="toggleLayer(this.id)">
+                State Boundaries
+            </li>
+        </ul>
+        <h3>Airlinks Filter</h3>
+        <div id='slider'></div>
+        <div class='filter-info' id='airlinks-filter'></div>
+        <h3>GDP Legend (INR Million per km<sup>2</sup>)</h3>
+        <div class='my-legend'>
+       <!--      <div class='legend-title'>Real GDP per km<sup>2</sup> (INR Million)</div> -->
+            <div class='legend-scale'>
+                <ul class='legend-labels' style='padding-left:0px;padding-top:0px;'>
+                    <li><span style='background:#262626;'></span>&lt;100</li>
+                    <li><span style='background:#ff9933;'></span>500</li>
+                    <li><span style='background:#ff5050;'></span>1500</li>
+                    <li><span style='background:#660033;'></span>&gt;1500</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 
-<div id='allmaps'>
-<div id='map'></div>
-<div class = 'comparemaps' id='cmap1'></div>
-<div class = 'comparemaps' id='cmap2'></div>
-</div>
+    <div id='allmaps'>
+        <div id='map'></div>
+        <div class = 'comparemaps' id='cmap1'></div>
+        <div class = 'comparemaps' id='cmap2'></div>
+    </div>
 </div>
 
 <script src="js/nouislider.min.js"></script>
@@ -331,7 +344,7 @@ function compareStates() {
 
     var cmap1 = new mapboxgl.Map({
         container: 'cmap1',
-        style: 'mapbox://styles/mapbox/dark-v9?optimize=true',
+        style: 'mapbox://styles/wireman27/cjjxpgblc4lco2spl206pi2d9',
         zoom: 5,
         center: center1,
         minZoom: 5,
@@ -354,7 +367,7 @@ function compareStates() {
 
     var cmap2 = new mapboxgl.Map({
         container: 'cmap2',
-        style: 'mapbox://styles/mapbox/dark-v9?optimize=true',
+        style: 'mapbox://styles/wireman27/cjjxpgblc4lco2spl206pi2d9',
         zoom: 5,
         center: center2,
         minZoom: 5,
@@ -474,7 +487,7 @@ function toggleControls() {
 var slideElement = document.getElementById('slider');
 slideElement.onmouseover = function(){
     if(slider.attributes['disabled']){
-        document.getElementById('airlinks-filter').innerText = 'Please enable the Air Links filter';
+        document.getElementById('airlinks-filter').innerText = 'Please enable the Airlinks filter';
     }
 };
 
