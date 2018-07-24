@@ -10,6 +10,7 @@
     <script src='js/dom.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet'/>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
+    <link href="css/nouislider.min.css" rel="stylesheet">
     <link href='css/styles.css' rel='stylesheet', type='text/css'/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
@@ -37,7 +38,7 @@
         <li id='airlinks-toggle'>
             <input type="checkbox" id="airlinks"  onclick="toggleLayer(this.id)">
             <p class='tooltip'>Air Links
-            <span class='tooltiptext'>Air links weighted by total weekly passenger capacity based on summer schedule <a href='http://dgca.nic.in/dom_flt_schedule/flt_index.htm' target='_blank'>data</a> from the DGCA.</span>
+            <span class='tooltiptext'>Air links weighted by total weekly passenger capacity on a given route based on summer schedule <a href='http://dgca.nic.in/dom_flt_schedule/flt_index.htm' target='_blank'>data</a> from the DGCA.</span>
             </p>
         </li>
         <li id='states-boundary-toggle'>
@@ -45,6 +46,9 @@
             State Boundaries
         </li>
     </ul>
+    <h3>Airlinks Filter</h3>
+    <div id='slider'></div>
+    <div class='filter-info' id='airlinks-filter'></div>
 </div>
 
 
@@ -54,7 +58,28 @@
 <div class = 'comparemaps' id='cmap2'></div>
 </div>
 </div>
+
+<script src="js/nouislider.min.js"></script>
+
 <script>
+
+
+var slider = document.getElementById('slider');
+
+
+noUiSlider.create(slider, {
+    start: [50000, 161402],
+    connect: true,
+    range: {
+        'min': 0,
+        '30%':20000,
+        '50%':50000,
+        '80%':80000,
+        'max': 161402
+    }
+});
+
+
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUycHRnMzNuaW14eHE5d24yIn0.0ty0jyl5uuIF4fulta_vjg';
 
@@ -189,7 +214,7 @@ function addAirlinksLayer(themap) {
         "paint": {
             "line-color": "black",
             "line-width":["/",["get","twc"], 20000],
-            "line-opacity": 0.5
+            "line-opacity": 0.3
         }
     })
 }
@@ -218,6 +243,13 @@ function addDataLayer() {
 
 //making the map pretty
 
+function populateAirlinksFilter() {
+    document.getElementById('airlinks-filter').innerText= 
+        'Between '+Math.round(slider.noUiSlider.get()[0])+
+        ' & '+Math.round(slider.noUiSlider.get()[1])+
+        ' passengers per week'
+}
+
 map.on('style.load', function () {
     addGdp(map);
     addStates(map);
@@ -225,6 +257,13 @@ map.on('style.load', function () {
     document.getElementById('gdp-data').checked = true;
     document.getElementById('states-boundary').checked = true;
     addDataLayer();
+    slider.setAttribute('disabled', true);
+    slider.noUiSlider.on('update', function() {
+        map.setFilter('airlinks',["all",[">=","twc",parseInt(slider.noUiSlider.get()[0])],["<=","twc",parseInt(slider.noUiSlider.get()[1])]])
+        if(!slider.attributes['disabled']) {   
+            populateAirlinksFilter();         
+        }
+    });
 });
 
 // compare tool
@@ -392,8 +431,16 @@ function createComparisonTable() {
 
 function toggleLayer(layerName) {
     if(map.getLayoutProperty(layerName, 'visibility') == 'none') {
+        if(layerName == 'airlinks') {
+            slider.removeAttribute('disabled')
+            populateAirlinksFilter();
+        }
         map.setLayoutProperty(layerName,'visibility','visible')
     } else {
+        if(layerName == 'airlinks') {
+            slider.setAttribute('disabled', true);
+            document.getElementById('airlinks-filter').innerText = '';
+        }
         map.setLayoutProperty(layerName,'visibility','none')
     }
 }
@@ -423,6 +470,23 @@ function toggleControls() {
 //         currentZoom = zoomEnd;
 //     }
 // });
+
+var slideElement = document.getElementById('slider');
+slideElement.onmouseover = function(){
+    if(slider.attributes['disabled']){
+        document.getElementById('airlinks-filter').innerText = 'Please enable the Air Links filter';
+    }
+};
+
+slideElement.onmouseleave = function(){
+    if(slider.attributes['disabled']) {
+        document.getElementById('airlinks-filter').innerText = '';
+    }
+};
+
+
+
+
 
 map.on('click','states',function(e) {
     if (hoveredStateId && !is_compare_states) {
