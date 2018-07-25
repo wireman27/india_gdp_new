@@ -15,8 +15,8 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
 
-<body>
 
+<body>
 <div id='container'>
     <div id="links">
         <ul class='docs'>
@@ -74,42 +74,20 @@
 
 <script src="js/nouislider.min.js"></script>
 
+
 <script>
 
-
-var slider = document.getElementById('slider');
-
-
-noUiSlider.create(slider, {
-    start: [50000, 161402],
-    connect: true,
-    range: {
-        'min': 0,
-        '30%':20000,
-        '50%':50000,
-        '80%':80000,
-        'max': 161402
-    }
-});
-
-
-
-mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUycHRnMzNuaW14eHE5d24yIn0.0ty0jyl5uuIF4fulta_vjg';
-
-// declaring some variables
+// declaring variables
 
 var states_tiles = 'wireman27.dzygdngz';
 var states_layer = 'State_wi2';
 var states_url = 'https://a.tiles.mapbox.com/v4/'+states_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
-
 var gdp_tiles = 'wireman27.33q9yb3c';
 var gdp_layer = 'gdpp_ws';
 var url = 'https://a.tiles.mapbox.com/v4/'+gdp_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
-
 var airlinks_tiles = 'wireman27.ajp9l3mx';
 var airlinks_layer = 'airlinks';
 var airlinks_url = 'https://a.tiles.mapbox.com/v4/'+airlinks_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
-
 var currentZoom = 5;
 var hoveredStateId =  null;
 var bounds = [
@@ -120,22 +98,22 @@ var is_compare_states = false;
 var states_select = 0;
 var selectedStates = [];
 var bbox_correct = [-3,-3,3,3];
-
 var compareAttributes = {
     "gsdp_mill":"Gross State Domestic Product (INR Million)",
     "gsdp_sqkm_mill": "GSDP (INR Million) Per Sq Km",
     "agri_ratio":"GSDP Attributable to Agriculture"
 }
-
 var table;
-
 var statesMetadata; 
 var statesMetadataUrl = 'https://raw.githubusercontent.com/wireman27/india_gdp_new/master/json/statesMetadata.json'
-
-
 var links = document.getElementsByClassName("docs");
+var slider = document.getElementById('slider');
+var slideElement = document.getElementById('slider');
 
-// initializing map
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUycHRnMzNuaW14eHE5d24yIn0.0ty0jyl5uuIF4fulta_vjg';
+
+
+// mapbox-gl-js functionality
 
 var map = new mapboxgl.Map({
     container: 'map',
@@ -149,7 +127,10 @@ var map = new mapboxgl.Map({
     maxBounds: bounds
 });
 
-// declaring some functions
+map.addControl(new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    country: 'in'
+}));
 
 function addGdp(themap) {
     themap.addSource("gdp",{
@@ -256,13 +237,6 @@ function addDataLayer() {
 
 //making the map pretty
 
-function populateAirlinksFilter() {
-    document.getElementById('airlinks-filter').innerText= 
-        'Between '+Math.round(slider.noUiSlider.get()[0])+
-        ' & '+Math.round(slider.noUiSlider.get()[1])+
-        ' passengers per week'
-}
-
 map.on('style.load', function () {
     addGdp(map);
     addStates(map);
@@ -279,7 +253,30 @@ map.on('style.load', function () {
     });
 });
 
-// compare tool
+
+// compare tool functionality
+
+function round(value, decimals) {
+  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}
+
+const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+};
+
+function stringGenerator(attribute, value) {
+    if (attribute == "gsdp_mill") {
+        return(numberWithCommas(value));       
+    }
+    if (attribute == "agri_ratio") {
+        return(round(value * 100,2).toString() + "%");
+    }
+    if (attribute == "gsdp_sqkm_mill") {
+        return((round(value,2)).toString());
+    } else {
+        return(value);
+    }
+}
 
 function backToHome() {
 	backToHomeUI();
@@ -387,31 +384,7 @@ function compareStates() {
     });
 
     createComparisonTable();
-
-
 }
-
-function stringGenerator(attribute, value) {
-    if (attribute == "gsdp_mill") {
-        return(numberWithCommas(value));       
-    }
-    if (attribute == "agri_ratio") {
-        return(round(value * 100,2).toString() + "%");
-    }
-    if (attribute == "gsdp_sqkm_mill") {
-        return((round(value,2)).toString());
-    } else {
-        return(value);
-    }
-}
-
-function round(value, decimals) {
-  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
-}
-
-const numberWithCommas = (x) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-};
 
 function createComparisonTable() {
 
@@ -439,8 +412,23 @@ function createComparisonTable() {
     document.getElementsByClassName("mapboxgl-ctrl-logo")[1].style.display = 'none';
     document.getElementsByClassName("mapboxgl-ctrl-attrib")[2].style.display = 'none';
     document.getElementsByClassName("mapboxgl-ctrl-logo")[2].style.display = 'none';
-
 }
+
+
+// controls functionality
+
+noUiSlider.create(slider, {
+    start: [50000, 161402],
+    connect: true,
+    range: {
+        'min': 0,
+        '30%':20000,
+        '50%':50000,
+        '80%':80000,
+        'max': 161402
+    }
+});
+
 
 function toggleLayer(layerName) {
     if(map.getLayoutProperty(layerName, 'visibility') == 'none') {
@@ -466,25 +454,17 @@ function toggleControls() {
     }
 }
 
+function populateAirlinksFilter() {
+    document.getElementById('airlinks-filter').innerText= 
+        'Between '+Math.round(slider.noUiSlider.get()[0])+
+        ' & '+Math.round(slider.noUiSlider.get()[1])+
+        ' passengers per week'
+}
 
-// events
+
+// events functionality
 
 
-
-// map.on('zoomend', function(){
-//     var zoomEnd = map.getZoom();
-//     if(currentZoom < 9.5 && zoomEnd > 9.5) { 
-//         //document.getElementById('loader').style.display = 'block';
-//         map.setStyle('mapbox://styles/mapbox/satellite-v9?optimize=true')
-//         currentZoom = zoomEnd;
-//     }
-//     if(currentZoom > 9.5 && zoomEnd < 9.5) { 
-//         map.setStyle('mapbox://styles/mapbox/dark-v9?optimize=true')
-//         currentZoom = zoomEnd;
-//     }
-// });
-
-var slideElement = document.getElementById('slider');
 slideElement.onmouseover = function(){
     if(slider.attributes['disabled']){
         document.getElementById('airlinks-filter').innerText = 'Please enable the Airlinks filter';
@@ -496,9 +476,6 @@ slideElement.onmouseleave = function(){
         document.getElementById('airlinks-filter').innerText = '';
     }
 };
-
-
-
 
 
 map.on('click','states',function(e) {
@@ -546,11 +523,24 @@ map.on("mouseleave", "states", function() {
     hoveredStateId =  null;
 });
 
-map.addControl(new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    country: 'in'
-}));
+
 // map.addControl(new mapboxgl.FullscreenControl());
+
+
+
+
+// map.on('zoomend', function(){
+//     var zoomEnd = map.getZoom();
+//     if(currentZoom < 9.5 && zoomEnd > 9.5) { 
+//         //document.getElementById('loader').style.display = 'block';
+//         map.setStyle('mapbox://styles/mapbox/satellite-v9?optimize=true')
+//         currentZoom = zoomEnd;
+//     }
+//     if(currentZoom > 9.5 && zoomEnd < 9.5) { 
+//         map.setStyle('mapbox://styles/mapbox/dark-v9?optimize=true')
+//         currentZoom = zoomEnd;
+//     }
+// });
 
 </script>
 
