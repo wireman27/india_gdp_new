@@ -79,6 +79,8 @@
 
 // declaring variables
 
+mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUycHRnMzNuaW14eHE5d24yIn0.0ty0jyl5uuIF4fulta_vjg';
+
 var states_tiles = 'wireman27.dzygdngz';
 var states_layer = 'State_wi2';
 var states_url = 'https://a.tiles.mapbox.com/v4/'+states_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
@@ -95,7 +97,6 @@ var bounds = [
     [104.30007044563308,39.99115993534974]
 ];
 var is_compare_states = false;
-var states_select = 0;
 var selectedStates = [];
 var bbox_correct = [-3,-3,3,3];
 var compareAttributes = {
@@ -109,8 +110,6 @@ var statesMetadataUrl = 'https://raw.githubusercontent.com/wireman27/india_gdp_n
 var links = document.getElementsByClassName("docs");
 var slider = document.getElementById('slider');
 var slideElement = document.getElementById('slider');
-
-mapboxgl.accessToken = 'pk.eyJ1IjoiY2l0eS13YWxrYWJpbGl0eSIsImEiOiJjamFncnNkODUycHRnMzNuaW14eHE5d24yIn0.0ty0jyl5uuIF4fulta_vjg';
 
 
 // mapbox-gl-js functionality
@@ -284,7 +283,6 @@ function backToHome() {
 		map.setFeatureState({source: 'states', sourceLayer: states_layer, id: selectedStates[feat].id},{click: false})
 	}
 	selectedStates = [];
-	states_select = 0;
 	is_compare_states = false;
 
 }
@@ -292,7 +290,6 @@ function backToHome() {
 function compareTool() {
 
     is_compare_states = true;
-    var states_select = 0;
 
     if(!statesMetadata) {
         var xhttp = new XMLHttpRequest();
@@ -328,7 +325,7 @@ function goBackFromCompare() {
 
 function compareStates() {
 
-    if (states_select < 2) {
+    if(selectedStates.length < 2) {
         alert("Please select more states!");
         return;
     }
@@ -486,14 +483,12 @@ map.on('click','states',function(e) {
     if (is_compare_states && e.features.length > 0) {
         var clickStat = map.getFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id}).click
         if (clickStat != true) {
-            if (states_select < 2) {
+            if (selectedStates.length < 2) {
                 map.setFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id},{click: true});
-                states_select++;
                 selectedStates.push(e.features[0]);
             } 
         } else {
             map.setFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id},{click: false});
-            states_select--;
             selectedStates.pop(e.features[0]);
         }
     };

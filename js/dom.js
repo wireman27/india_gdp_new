@@ -3,7 +3,6 @@ function changeListElement(number, text="", link="#",attributeKey="style",attrib
 	links[0]["children"][number]["children"][0].href = link
 	links[0]["children"][number]["children"][0].setAttribute(attributeKey,attributeValue)
 
-    console.log(removeHref)
     if(removeHref==true) {
         links[0]["children"][number]["children"][0].removeAttribute('href');
     }
@@ -20,7 +19,6 @@ function compareToolUI() {
     changeListElement(2,"Back to Home","javascript:backToHome()")
 
     document.getElementById('controls').style.display = 'none';
-    console.log('hit this');
 }
 
 function goBackFromCompareUI() {
@@ -62,6 +60,5 @@ function backToHomeUI() {
 	document.getElementsByClassName("mapboxgl-control-container")[0].style.display = 'block';
 
     document.getElementById('controls').style.display = 'block';
-    console.log('hit this as well');
 
 }
