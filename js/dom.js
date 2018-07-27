@@ -60,5 +60,14 @@ function backToHomeUI() {
 	document.getElementsByClassName("mapboxgl-control-container")[0].style.display = 'block';
 
     document.getElementById('controls').style.display = 'block';
+}
 
+function airlinksListUi() {
+    console.log("hit the button");
+    var list = document.getElementById('airlinks-list');
+    if (list.style.display == "") {
+        list.style.display = 'block';
+    } else {
+        list.style.display = "";
+    }
 }

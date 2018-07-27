@@ -47,9 +47,16 @@
                 State Boundaries
             </li>
         </ul>
-        <h3>Airlinks Filter</h3>
+        <h3>Airlinks Filters</h3>
         <div id='slider'></div>
         <div class='filter-info' id='airlinks-filter'></div>
+        <div id='airlinks-city'>
+            <p id='airlinks-city-text' style='color: #999'>All airports selected</p>
+            <button id='airlinks-button' type="button" disabled='true' onclick='airlinksListUi()'>&gt;</button>
+        </div>
+
+        <div id='airlinks-list'></div>
+
         <h3>GDP Legend (INR Million per km<sup>2</sup>)</h3>
         <div class='my-legend'>
        <!--      <div class='legend-title'>Real GDP per km<sup>2</sup> (INR Million)</div> -->
@@ -110,6 +117,8 @@ var statesMetadataUrl = 'https://raw.githubusercontent.com/wireman27/india_gdp_n
 var links = document.getElementsByClassName("docs");
 var slider = document.getElementById('slider');
 var slideElement = document.getElementById('slider');
+var airportMetadata;
+var airportMetadataUrl = 'json/airportMetadata.json';
 
 
 // mapbox-gl-js functionality
@@ -431,13 +440,28 @@ function toggleLayer(layerName) {
     if(map.getLayoutProperty(layerName, 'visibility') == 'none') {
         if(layerName == 'airlinks') {
             slider.removeAttribute('disabled')
+            document.getElementById('airlinks-button').removeAttribute('disabled');
             populateAirlinksFilter();
+            document.getElementById('airlinks-city-text').style.color = 'orange';
+            if(!airportMetadata) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        airportMetadata = JSON.parse(xhttp.responseText)
+                        genAirports();
+                    }
+                };
+                xhttp.open("GET",airportMetadataUrl,true);
+                xhttp.send();
+            };
         }
         map.setLayoutProperty(layerName,'visibility','visible')
     } else {
         if(layerName == 'airlinks') {
             slider.setAttribute('disabled', true);
             document.getElementById('airlinks-filter').innerText = '';
+            document.getElementById('airlinks-city-text').style.color = '#999';
+            document.getElementById('airlinks-button').setAttribute('disabled','true');
         }
         map.setLayoutProperty(layerName,'visibility','none')
     }
@@ -458,6 +482,19 @@ function populateAirlinksFilter() {
         ' passengers per week'
 }
 
+function genAirports() {
+    for(var i in airportMetadata) {
+        var p = document.createElement('p');
+        p.innerHTML = i;
+        p.setAttribute('onclick','popAirlinksListCity(this.innerHTML)');
+        document.getElementById("airlinks-list").appendChild(p);
+    };
+}
+
+function popAirlinksListCity(city) {
+    document.getElementById("airlinks-city-text").innerText = city + ' selected';
+    document.getElementById("airlinks-list").style.display = "";
+}
 
 // events functionality
 

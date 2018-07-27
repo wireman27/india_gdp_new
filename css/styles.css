@@ -18,6 +18,52 @@ div#controls {
 	background-color: rgb(0, 0, 0, 0.4);
 }
 
+div#airlinks-city {
+	margin-left: 5%;
+	margin-top: 5%;
+}
+
+div#airlinks-city p {
+	width: 80%;
+	float:left;
+	color: orange;
+	margin-bottom: 8%;
+	background-color: black;
+	border-radius: 5px;
+	height:50%;
+	border:none;
+	background:transparent;
+}
+
+div#airlinks-list {
+	position:absolute;
+	left:100%;
+	top:35%;
+	height: 30%;
+	width: 50%;
+	background-color:black;
+	overflow:scroll;
+	border-radius: 25px;
+    background-color: rgb(0, 0, 0, 0.4);
+    font-size: 12px;
+    display:none;
+}
+
+div#airlinks-list p {
+	text-align:center;
+}
+
+div#airlinks-list p:hover {
+	background-color:orange;
+}
+
+button#airlinks-button {
+	position: absolute;
+	right: 3px;
+	width: 10%;
+	background-color:white;
+}
+
 div#controls ul {
 	list-style-type: none;
 	padding: 5%;
