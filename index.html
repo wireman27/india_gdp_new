@@ -94,8 +94,8 @@ var states_url = 'https://a.tiles.mapbox.com/v4/'+states_tiles+'/{z}/{x}/{y}.mvt
 var gdp_tiles = 'wireman27.33q9yb3c';
 var gdp_layer = 'gdpp_ws';
 var url = 'https://a.tiles.mapbox.com/v4/'+gdp_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
-var airlinks_tiles = 'wireman27.ajp9l3mx';
-var airlinks_layer = 'airlinks';
+var airlinks_tiles = 'wireman27.42n3ter9';
+var airlinks_layer = 'air_links_t2';
 var airlinks_url = 'https://a.tiles.mapbox.com/v4/'+airlinks_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
 var currentZoom = 5;
 var hoveredStateId =  null;
@@ -119,6 +119,7 @@ var slider = document.getElementById('slider');
 var slideElement = document.getElementById('slider');
 var airportMetadata;
 var airportMetadataUrl = 'json/airportMetadata.json';
+var selectedAirlinkCity = null;
 
 
 // mapbox-gl-js functionality
@@ -210,13 +211,14 @@ function addAirlinksLayer(themap) {
         "type":"line",
         "source": "airlinks",
         "layout": {
-            "visibility":'none'
+            "visibility":'none',
+            "line-cap":"round"
         },
         "source-layer":airlinks_layer,
         "paint": {
-            "line-color": "black",
-            "line-width":["/",["get","twc"], 20000],
-            "line-opacity": 0.3
+            "line-color": "orange",
+            "line-width":["/",["get","twc"], 10000],
+            "line-opacity": 1
         }
     })
 }
@@ -254,7 +256,23 @@ map.on('style.load', function () {
     addDataLayer();
     slider.setAttribute('disabled', true);
     slider.noUiSlider.on('update', function() {
-        map.setFilter('airlinks',["all",[">=","twc",parseInt(slider.noUiSlider.get()[0])],["<=","twc",parseInt(slider.noUiSlider.get()[1])]])
+        if (selectedAirlinkCity ==  null) {
+            map.setFilter('airlinks',
+            ["all",
+                [">=","twc",parseInt(slider.noUiSlider.get()[0])],
+                ["<=","twc",parseInt(slider.noUiSlider.get()[1])]
+            ])
+        } else {
+            map.setFilter('airlinks',
+            ["all",
+                [">=","twc",parseInt(slider.noUiSlider.get()[0])],
+                ["<=","twc",parseInt(slider.noUiSlider.get()[1])],
+                ["any",
+                    ["==","air1",selectedAirlinkCity],
+                    ["==","air2",selectedAirlinkCity]
+                ]
+            ])
+        };
         if(!slider.attributes['disabled']) {   
             populateAirlinksFilter();         
         }
@@ -462,6 +480,7 @@ function toggleLayer(layerName) {
             document.getElementById('airlinks-filter').innerText = '';
             document.getElementById('airlinks-city-text').style.color = '#999';
             document.getElementById('airlinks-button').setAttribute('disabled','true');
+            document.getElementById('airlinks-list').style.display = '';
         }
         map.setLayoutProperty(layerName,'visibility','none')
     }
@@ -493,6 +512,16 @@ function genAirports() {
 
 function popAirlinksListCity(city) {
     document.getElementById("airlinks-city-text").innerText = city + ' selected';
+    selectedAirlinkCity = airportMetadata[city]['iata_apt'];
+    map.setFilter('airlinks',
+        ["all",
+            [">=","twc",parseInt(slider.noUiSlider.get()[0])],
+            ["<=","twc",parseInt(slider.noUiSlider.get()[1])],
+            ["any",
+                ["==","air1",airportMetadata[city]['iata_apt']],
+                ["==","air2",airportMetadata[city]['iata_apt']]
+            ]
+        ])
     document.getElementById("airlinks-list").style.display = "";
 }
 
