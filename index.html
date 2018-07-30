@@ -555,7 +555,16 @@ map.on('click','states',function(e) {
             } 
         } else {
             map.setFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id},{click: false});
-            selectedStates.pop(e.features[0]);
+
+            for(var i=0; i < selectedStates.length; i++) {
+                if(selectedStates[i].id == e.features[0].id) {
+                    console.log("im hitting the right place");
+                    var index = selectedStates.indexOf(e.features[0].id);
+                    if(index > -1) {
+                        selectedStates.splice(index, 1);
+                    }
+                }
+            }
         }
     };
 })
