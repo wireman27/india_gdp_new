@@ -9,15 +9,40 @@
     "lat": 23.89,
     "lng": 91.24222222
   },
+  "Agatti": {
+    "iata_apt": "AGX",
+    "lat": 10.82805556,
+    "lng": 72.17888889
+  },
+  "Agra": {
+    "iata_apt": "AGR",
+    "lat": 27.1575,
+    "lng": 77.96083333
+  },
   "Ahmedabad": {
     "iata_apt": "AMD",
     "lat": 23.07722222,
     "lng": 72.63472222
   },
+  "Aizawal": {
+    "iata_apt": "AJL",
+    "lat": 23.84059906,
+    "lng": 92.61969757
+  },
+  "Allahabad": {
+    "iata_apt": "IXD",
+    "lat": 25.44,
+    "lng": 81.73388889
+  },
   "Amritsar": {
     "iata_apt": "ATQ",
     "lat": 31.70777778,
     "lng": 74.79916667
+  },
+  "Aurangabad": {
+    "iata_apt": "IXU",
+    "lat": 19.86277778,
+    "lng": 75.39805556
   },
   "Bagdogra": {
     "iata_apt": "IXB",
@@ -29,10 +54,40 @@
     "lat": 13.20694444,
     "lng": 77.70416667
   },
+  "Bathinda": {
+    "iata_apt": "BUP",
+    "lat": 30.27,
+    "lng": 74.755556
+  },
   "Belgaum": {
     "iata_apt": "IXG",
     "lat": 15.85916667,
     "lng": 74.6175
+  },
+  "Bhavnagar": {
+    "iata_apt": "BHU",
+    "lat": 21.75222222,
+    "lng": 72.18527778
+  },
+  "Bhopal": {
+    "iata_apt": "BHO",
+    "lat": 23.2875,
+    "lng": 77.3375
+  },
+  "Bhubaneshwar": {
+    "iata_apt": "BBI",
+    "lat": 20.24440002,
+    "lng": 85.81780243
+  },
+  "Bhuj": {
+    "iata_apt": "BHJ",
+    "lat": 23.28777778,
+    "lng": 69.67027778
+  },
+  "Bikaner": {
+    "iata_apt": "BKB",
+    "lat": 28.07055556,
+    "lng": 73.20694444
   },
   "Chandigarh": {
     "iata_apt": "IXC",
@@ -48,6 +103,11 @@
     "iata_apt": "CJB",
     "lat": 11.02666667,
     "lng": 77.04166667
+  },
+  "Cuddapah": {
+    "iata_apt": "CDP",
+    "lat": 14.51,
+    "lng": 78.77277778
   },
   "Dehradun": {
     "iata_apt": "DED",
@@ -69,6 +129,21 @@
     "lat": 27.48385278,
     "lng": 95.016944
   },
+  "Dimapur": {
+    "iata_apt": "DMU",
+    "lat": 25.88388889,
+    "lng": 93.77111111
+  },
+  "Diu": {
+    "iata_apt": "DIU",
+    "lat": 20.713,
+    "lng": 70.925
+  },
+  "Gaya": {
+    "iata_apt": "GAY",
+    "lat": 24.74444444,
+    "lng": 84.95111111
+  },
   "Goa": {
     "iata_apt": "GOI",
     "lat": 15.38083333,
@@ -84,10 +159,30 @@
     "lat": 26.10611111,
     "lng": 91.58583333
   },
+  "Gwalior": {
+    "iata_apt": "GWL",
+    "lat": 26.29333333,
+    "lng": 78.22777778
+  },
+  "Hubli": {
+    "iata_apt": "HBX",
+    "lat": 15.36166667,
+    "lng": 75.08472222
+  },
   "Hyderabad": {
     "iata_apt": "HYD",
     "lat": 17.24,
     "lng": 78.43
+  },
+  "Imphal": {
+    "iata_apt": "IMF",
+    "lat": 24.76,
+    "lng": 93.89666667
+  },
+  "Indore": {
+    "iata_apt": "IDR",
+    "lat": 22.72179985,
+    "lng": 75.80110168
   },
   "Jabalpur": {
     "iata_apt": "JLR",
@@ -104,6 +199,26 @@
     "lat": 26.88027778,
     "lng": 70.855
   },
+  "Jammu": {
+    "iata_apt": "IXJ",
+    "lat": 32.68916667,
+    "lng": 74.8375
+  },
+  "Jamnagar": {
+    "iata_apt": "JGA",
+    "lat": 22.46549988,
+    "lng": 70.01260376
+  },
+  "Jodhpur": {
+    "iata_apt": "JDH",
+    "lat": 26.25111111,
+    "lng": 73.04888889
+  },
+  "Jorhat": {
+    "iata_apt": "JRH",
+    "lat": 26.73150063,
+    "lng": 94.17549896
+  },
   "Kandla": {
     "iata_apt": "IXY",
     "lat": 23.11269951,
@@ -113,6 +228,11 @@
     "iata_apt": "KNU",
     "lat": 26.44140053,
     "lng": 80.36489868
+  },
+  "Khajuraho": {
+    "iata_apt": "HJR",
+    "lat": 24.81719971,
+    "lng": 79.91860199
   },
   "Kochi": {
     "iata_apt": "COK",
@@ -129,10 +249,30 @@
     "lat": 11.14,
     "lng": 75.95
   },
+  "Kullu": {
+    "iata_apt": "KUU",
+    "lat": 31.87666667,
+    "lng": 77.15444444
+  },
   "Leh": {
     "iata_apt": "IXL",
     "lat": 34.13583333,
     "lng": 77.54638889
+  },
+  "Lilabari": {
+    "iata_apt": "IXI",
+    "lat": 27.29555556,
+    "lng": 94.09777778
+  },
+  "Lucknow": {
+    "iata_apt": "LKO",
+    "lat": 26.76194444,
+    "lng": 80.88333333
+  },
+  "Ludhiana": {
+    "iata_apt": "LUH",
+    "lat": 30.85472222,
+    "lng": 75.9525
   },
   "Madurai": {
     "iata_apt": "IXM",
@@ -148,6 +288,36 @@
     "iata_apt": "BOM",
     "lat": 19.08861111,
     "lng": 72.86805556
+  },
+  "Mundra": {
+    "iata_apt": "nan_Mundra",
+    "lat": 22.83416667,
+    "lng": 69.76444444
+  },
+  "Mysore": {
+    "iata_apt": "MYQ",
+    "lat": 12.23,
+    "lng": 76.65583333
+  },
+  "Nagpur": {
+    "iata_apt": "NAG",
+    "lat": 21.09222222,
+    "lng": 79.04722222
+  },
+  "Nanded": {
+    "iata_apt": "NDC",
+    "lat": 19.18194444,
+    "lng": 77.31861111
+  },
+  "Pantnagar": {
+    "iata_apt": "PGH",
+    "lat": 29.032222,
+    "lng": 79.474167
+  },
+  "Pathankot": {
+    "iata_apt": "IXP",
+    "lat": 32.23361111,
+    "lng": 75.63444444
   },
   "Patna": {
     "iata_apt": "PAT",
@@ -174,230 +344,30 @@
     "lat": 18.58222222,
     "lng": 73.91972222
   },
-  "Rajahmundry": {
-    "iata_apt": "RJA",
-    "lat": 17.11027778,
-    "lng": 81.81833333
-  },
-  "Silchar": {
-    "iata_apt": "IXS",
-    "lat": 24.91290092,
-    "lng": 92.97869873
-  },
-  "Srinagar": {
-    "iata_apt": "SXR",
-    "lat": 33.98713889,
-    "lng": 74.77425
-  },
-  "Surat": {
-    "iata_apt": "STV",
-    "lat": 21.11765833,
-    "lng": 72.74525833
-  },
-  "Tirupati": {
-    "iata_apt": "TIR",
-    "lat": 13.63777778,
-    "lng": 79.54722222
-  },
-  "Trivandrum": {
-    "iata_apt": "TRV",
-    "lat": 8.48,
-    "lng": 76.92
-  },
-  "Tuticorin": {
-    "iata_apt": "TCR",
-    "lat": 8.72416667,
-    "lng": 78.02583333
-  },
-  "Udaipur": {
-    "iata_apt": "UDR",
-    "lat": 24.61777778,
-    "lng": 73.89611111
-  },
-  "Varanasi": {
-    "iata_apt": "VNS",
-    "lat": 25.45222222,
-    "lng": 82.85944444
-  },
-  "Vijayawada": {
-    "iata_apt": "VGA",
-    "lat": 16.52888889,
-    "lng": 80.79583333
-  },
-  "Vizag": {
-    "iata_apt": "VTZ",
-    "lat": 17.72111111,
-    "lng": 83.22444444
-  },
-  "Mundra": {
-    "iata_apt": "nan_Mundra",
-    "lat": 22.83416667,
-    "lng": 69.76444444
-  },
-  "Bhubaneshwar": {
-    "iata_apt": "BBI",
-    "lat": 20.24440002,
-    "lng": 85.81780243
-  },
-  "Imphal": {
-    "iata_apt": "IMF",
-    "lat": 24.76,
-    "lng": 93.89666667
-  },
-  "Indore": {
-    "iata_apt": "IDR",
-    "lat": 22.72179985,
-    "lng": 75.80110168
-  },
-  "Nagpur": {
-    "iata_apt": "NAG",
-    "lat": 21.09222222,
-    "lng": 79.04722222
-  },
-  "Ranchi": {
-    "iata_apt": "IXR",
-    "lat": 23.31416667,
-    "lng": 85.32166667
-  },
-  "Agra": {
-    "iata_apt": "AGR",
-    "lat": 27.1575,
-    "lng": 77.96083333
-  },
-  "Aizawal": {
-    "iata_apt": "AJL",
-    "lat": 23.84059906,
-    "lng": 92.61969757
-  },
-  "Aurangabad": {
-    "iata_apt": "IXU",
-    "lat": 19.86277778,
-    "lng": 75.39805556
-  },
-  "Bhopal": {
-    "iata_apt": "BHO",
-    "lat": 23.2875,
-    "lng": 77.3375
-  },
-  "Dimapur": {
-    "iata_apt": "DMU",
-    "lat": 25.88388889,
-    "lng": 93.77111111
-  },
-  "Gaya": {
-    "iata_apt": "GAY",
-    "lat": 24.74444444,
-    "lng": 84.95111111
-  },
-  "Hubli": {
-    "iata_apt": "HBX",
-    "lat": 15.36166667,
-    "lng": 75.08472222
-  },
-  "Jammu": {
-    "iata_apt": "IXJ",
-    "lat": 32.68916667,
-    "lng": 74.8375
-  },
-  "Jamnagar": {
-    "iata_apt": "JGA",
-    "lat": 22.46549988,
-    "lng": 70.01260376
-  },
-  "Jodhpur": {
-    "iata_apt": "JDH",
-    "lat": 26.25111111,
-    "lng": 73.04888889
-  },
-  "Khajuraho": {
-    "iata_apt": "HJR",
-    "lat": 24.81719971,
-    "lng": 79.91860199
-  },
-  "Lucknow": {
-    "iata_apt": "LKO",
-    "lat": 26.76194444,
-    "lng": 80.88333333
-  },
-  "Nanded": {
-    "iata_apt": "NDC",
-    "lat": 19.18194444,
-    "lng": 77.31861111
-  },
   "Raipur": {
     "iata_apt": "RPR",
     "lat": 21.18111111,
     "lng": 81.73847222
+  },
+  "Rajahmundry": {
+    "iata_apt": "RJA",
+    "lat": 17.11027778,
+    "lng": 81.81833333
   },
   "Rajkot": {
     "iata_apt": "RAJ",
     "lat": 22.30920029,
     "lng": 70.77950287
   },
-  "Vadodara": {
-    "iata_apt": "BDQ",
-    "lat": 22.32944444,
-    "lng": 73.21944444
+  "Ranchi": {
+    "iata_apt": "IXR",
+    "lat": 23.31416667,
+    "lng": 85.32166667
   },
-  "Agatti": {
-    "iata_apt": "AGX",
-    "lat": 10.82805556,
-    "lng": 72.17888889
-  },
-  "Allahabad": {
-    "iata_apt": "IXD",
-    "lat": 25.44,
-    "lng": 81.73388889
-  },
-  "Bathinda": {
-    "iata_apt": "BUP",
-    "lat": 30.27,
-    "lng": 74.755556
-  },
-  "Bhavnagar": {
-    "iata_apt": "BHU",
-    "lat": 21.75222222,
-    "lng": 72.18527778
-  },
-  "Bhuj": {
-    "iata_apt": "BHJ",
-    "lat": 23.28777778,
-    "lng": 69.67027778
-  },
-  "Bikaner": {
-    "iata_apt": "BKB",
-    "lat": 28.07055556,
-    "lng": 73.20694444
-  },
-  "Diu": {
-    "iata_apt": "DIU",
-    "lat": 20.713,
-    "lng": 70.925
-  },
-  "Gwalior": {
-    "iata_apt": "GWL",
-    "lat": 26.29333333,
-    "lng": 78.22777778
-  },
-  "Kullu": {
-    "iata_apt": "KUU",
-    "lat": 31.87666667,
-    "lng": 77.15444444
-  },
-  "Lilabari": {
-    "iata_apt": "IXI",
-    "lat": 27.29555556,
-    "lng": 94.09777778
-  },
-  "Ludhiana": {
-    "iata_apt": "LUH",
-    "lat": 30.85472222,
-    "lng": 75.9525
-  },
-  "Pathankot": {
-    "iata_apt": "IXP",
-    "lat": 32.23361111,
-    "lng": 75.63444444
+  "Salem": {
+    "iata_apt": "SXV",
+    "lat": 11.78194444,
+    "lng": 78.06444444
   },
   "Shillong": {
     "iata_apt": "SHL",
@@ -414,49 +384,79 @@
     "lat": 19.68861111,
     "lng": 74.37888889
   },
+  "Silchar": {
+    "iata_apt": "IXS",
+    "lat": 24.91290092,
+    "lng": 92.97869873
+  },
+  "Srinagar": {
+    "iata_apt": "SXR",
+    "lat": 33.98713889,
+    "lng": 74.77425
+  },
+  "Surat": {
+    "iata_apt": "STV",
+    "lat": 21.11765833,
+    "lng": 72.74525833
+  },
   "Tezpur": {
     "iata_apt": "TEZ",
     "lat": 26.71222222,
     "lng": 92.78722222
-  },
-  "Trichy": {
-    "iata_apt": "TRZ",
-    "lat": 10.76527778,
-    "lng": 78.70972222
-  },
-  "Jorhat": {
-    "iata_apt": "JRH",
-    "lat": 26.73150063,
-    "lng": 94.17549896
   },
   "Thoise": {
     "iata_apt": "nan_Thoise",
     "lat": 35.083333,
     "lng": 77.633333
   },
-  "Cuddapah": {
-    "iata_apt": "CDP",
-    "lat": 14.51,
-    "lng": 78.77277778
+  "Tirupati": {
+    "iata_apt": "TIR",
+    "lat": 13.63777778,
+    "lng": 79.54722222
   },
-  "Mysore": {
-    "iata_apt": "MYQ",
-    "lat": 12.23,
-    "lng": 76.65583333
+  "Trichy": {
+    "iata_apt": "TRZ",
+    "lat": 10.76527778,
+    "lng": 78.70972222
   },
-  "Salem": {
-    "iata_apt": "SXV",
-    "lat": 11.78194444,
-    "lng": 78.06444444
+  "Trivandrum": {
+    "iata_apt": "TRV",
+    "lat": 8.48,
+    "lng": 76.92
+  },
+  "Tuticorin": {
+    "iata_apt": "TCR",
+    "lat": 8.72416667,
+    "lng": 78.02583333
+  },
+  "Udaipur": {
+    "iata_apt": "UDR",
+    "lat": 24.61777778,
+    "lng": 73.89611111
+  },
+  "Vadodara": {
+    "iata_apt": "BDQ",
+    "lat": 22.32944444,
+    "lng": 73.21944444
+  },
+  "Varanasi": {
+    "iata_apt": "VNS",
+    "lat": 25.45222222,
+    "lng": 82.85944444
   },
   "Vidyanagar": {
     "iata_apt": "VDY",
     "lat": 15.175,
     "lng": 76.6341
   },
-  "Pantnagar": {
-    "iata_apt": "PGH",
-    "lat": 29.032222,
-    "lng": 79.474167
+  "Vijayawada": {
+    "iata_apt": "VGA",
+    "lat": 16.52888889,
+    "lng": 80.79583333
+  },
+  "Vizag": {
+    "iata_apt": "VTZ",
+    "lat": 17.72111111,
+    "lng": 83.22444444
   }
 }
