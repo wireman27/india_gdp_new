@@ -4,15 +4,15 @@ body {
 	background-color: black;
 }
 
+
 div#controls {
 	position: fixed;
-	left: 2%;
-	top: 25%;
+	left: 1%;
 	font-family: 'Montserrat', sans-serif;
 	z-index: 5;
+	height:auto;
 	color:white;
-	width: 20%;
-	height: auto;
+	width: 25%;
 	border-radius: 25px;
 	border: 1px solid black;
 	background-color: rgb(0, 0, 0, 0.4);
@@ -353,6 +353,35 @@ div.my-legend {
 	color: #777;
 }
 
+.w3-modal {
+	display:block;
+	z-index: 6;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.w3-modal h3 {
+	text-align:center;
+}
+
+.w3-modal-content {
+	padding: 2%;
+	background: rgb(255, 255, 255, 0.8);
+	color: black;
+	border-radius: 20px;
+}
+
+.w3-modal span {
+	border-radius: 20px;
+}
+
+.w3-modal-content a {
+	color:#ff5050;
+	text-decoration: darkorange;
+}
+
+.w3-modal-content ul {
+	padding-left: 5%;
+}
 
 
 

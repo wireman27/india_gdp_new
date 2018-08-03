@@ -1,7 +1,11 @@
-function changeListElement(number, text="", link="#",attributeKey="style",attributeValue="",removeHref) {
+function changeListElement(number, text="", link="#",attributeKey="style",attributeValue="",removeHref, innerHtml) {
 	links[0]["children"][number]["children"][0].innerText = text
 	links[0]["children"][number]["children"][0].href = link
 	links[0]["children"][number]["children"][0].setAttribute(attributeKey,attributeValue)
+
+    if(innerHtml) {
+        links[0]["children"][number]["children"][0].innerHTML = innerHtml
+    }
 
     if(removeHref==true) {
         links[0]["children"][number]["children"][0].removeAttribute('href');
@@ -9,15 +13,17 @@ function changeListElement(number, text="", link="#",attributeKey="style",attrib
 }
 
 function compareToolUI() {
+    console.log('first')
     document.getElementsByClassName("mapboxgl-control-container")[0].style.display = 'none';
     document.getElementById('map').style.display = 'block';
+    console.log('reached here');
     changeListElement(0, "Choose any two states",undefined,undefined,undefined,removeHref=true);
     for(i=2;i<4;i++) {
         changeListElement(i)
     }
-    changeListElement(1,"Compare!","javascript:compareStates()","style","color:orange")
-    changeListElement(2,"Back to Home","javascript:backToHome()")
-
+    changeListElement(1,"Compare!","javascript:compareStates()","style","color:orange");
+    changeListElement(2,"Back to Home","javascript:backToHome()");
+    changeListElement(4,undefined,undefined,undefined,undefined,undefined,innerHtml="")
     document.getElementById('controls').style.display = 'none';
 }
 
@@ -56,6 +62,7 @@ function backToHomeUI() {
 	changeListElement(2, "Original Paper","http://www.ngdc.noaa.gov/eog/pubs/Ghosh_TOGEOGJ.pdf", "target", "_blank")
 	changeListElement(3, "Compare States","javascript:compareTool()", "target", "_blank")
 	changeListElement(3, "Compare States","javascript:compareTool()", "style", "color:orange")
+    changeListElement(4, "","javascript:toggleInfo()",undefined, undefined,undefined,"<img src='res/info2.svg' width='19px' height=19px>")
 
 	document.getElementsByClassName("mapboxgl-control-container")[0].style.display = 'block';
 

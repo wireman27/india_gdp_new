@@ -11,23 +11,54 @@
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet'/>
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
     <link href="css/nouislider.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href='css/styles.css' rel='stylesheet', type='text/css'/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
 
+<script>
+    if (screen.width < 846) {
+        alert("Warning: The 3D India GDP tool is not optimised for phone or tablet yet. Elements in the page might not appear as expected.")
+    }
+</script>
 
-<body>
+
+<body onresize="resizeControls()">
+        <div id='info' class='w3-modal'>
+        <div class="w3-modal-content w3-animate-top w3-card-4">
+            <span onclick="document.getElementById('info').style.display='none';" 
+                class="w3-button w3-display-topright">&times;</span>
+            <h3>Spatial Distribution of India's GDP</h3>
+            <p>This 3D tool shows how India’s GDP (2015-2016 at constant 2011-2012 prices) is spatially distributed across the country. Each block on the map is a 1km<sup>2</sup> gridded cell of GDP output (see legend for values based on colour). This tool builds on our <a href="http://www.idfcinstitute.org/Webmap/GDP.html" target="_blank">earlier work</a> that showed the spatial distribution of 2006 GDP.</p>
+            <br>
+            <p>In this version, we have introduced two new features:</p>
+            <br>
+            <ul>
+                <li>A <span id='infohint1' style="color:#f48642">Compare States</span> tool which allows the user to view the spatial distribution of economic activity of two states side-by-side. For example a <a href="https://raw.githubusercontent.com/wireman27/india_gdp_new/master/res/comparison.png" target="_blank">comparison</a> between Telangana and Bihar might reveal that economic activity in Bihar is more spread out with a smaller proportion of its GDP attributable to Patna, while in Telangana much of the economic activity is concentrated in Hyderabad. Also interesting to note might be the disparity in the percentage of GDP attributable to agriculture.</li>
+                <li>A map of <span id='infohint2' style="color:#f48642">India’s air links</span> weighted by total weekly passenger capacity on each route. This, when used in conjunction with the GDP layer, could be useful in ascertaining infrastructural needs and opportunities and could also reveal interesting patterns in the movement of people within the country.</li>
+            </ul>
+            <br>
+            <p>The original paper that details the methodology we have used can be found <a href="http://www.ngdc.noaa.gov/eog/pubs/Ghosh_TOGEOGJ.pdf" target="_blank">here</a>. The data we have used can be found <a href="https://github.com/wireman27/india_gdp_new" target="_blank">here</a> and for a quick walkthrough on how all of the data was processed for the GDP layer click <a href="https://wireman27.github.io/india_gdp_new/qgis_docs" target="_blank">here.</a></p>
+            <br>
+            <p>This tool is a work-in-progress. We are working to add more data and layers that we hope will offer more insights, and welcome any feedback and queries at shreyas.thottuvai@idfcinstitute.org</p>
+        </div>
+    </div>
 <div id='container'>
     <div id="links">
         <ul class='docs'>
           <li><a href="https://github.com/wireman27/india_gdp_new" target="_blank">Github</a></li>
           <li><a href="https://wireman27.github.io/india_gdp_new/qgis_docs" target="_blank">QGIS Walkthrough</a></li>
           <li><a href="http://www.ngdc.noaa.gov/eog/pubs/Ghosh_TOGEOGJ.pdf" target="_blank">Original Paper</a></li>
-          <li><a href=javascript:compareTool() style='color:orange'>Compare States</a></li>
+          <li id='infohint1change'><a href=javascript:compareTool() style='color:orange'>Compare States</a></li>
+          <li>
+            <!-- <img src='res/info.svg' width='19px' height=19px> -->
+            <a href='javascript:toggleInfo()'><img src='res/info2.svg' width='19px' height=19px></a>
+        </li>
         </ul>
     </div>
 
     <div id='control-toggle' onclick='toggleControls()'></div>
+
 
     <div id='controls'>
         <h3>Toggle Layers</h3>
@@ -70,6 +101,7 @@
             </div>
         </div>
     </div>
+
 
 
     <div id='allmaps'>
@@ -447,9 +479,9 @@ noUiSlider.create(slider, {
     range: {
         'min': 0,
         '30%':20000,
-        '50%':30000,
-        '80%':50000,
-        'max': 161402
+        '50%':50000,
+        '80%':135000,
+        'max': 320000
     }
 });
 
@@ -541,7 +573,27 @@ function popAirlinksListCity(city) {
     document.getElementById("airlinks-list").style.display = "";
 }
 
+function toggleInfo() {
+    document.getElementById('info').style.display='block';
+}
+
 // events functionality
+
+document.getElementById('infohint1').onmouseover = function() {
+    document.getElementById('infohint1change').style.border = '3px solid orange'
+}
+
+document.getElementById('infohint1').onmouseleave = function() {
+    document.getElementById('infohint1change').style.border = ''
+}
+
+document.getElementById('infohint2').onmouseover = function() {
+    document.getElementById('airlinks-toggle').style.border = '3px solid orange'
+}
+
+document.getElementById('infohint2').onmouseleave = function() {
+    document.getElementById('airlinks-toggle').style.border = ''
+}
 
 
 slideElement.onmouseover = function(){
@@ -556,6 +608,8 @@ slideElement.onmouseleave = function(){
     }
 };
 
+document.getElementById
+
 
 map.on('click','states',function(e) {
     if (hoveredStateId && !is_compare_states) {
@@ -564,6 +618,7 @@ map.on('click','states',function(e) {
     }
     if (is_compare_states && e.features.length > 0) {
         var clickStat = map.getFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id}).click
+        console.log(clickStat);
         if (clickStat != true) {
             if (selectedStates.length < 2) {
                 map.setFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id},{click: true});
@@ -571,14 +626,9 @@ map.on('click','states',function(e) {
             } 
         } else {
             map.setFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id},{click: false});
-
             for(var i=0; i < selectedStates.length; i++) {
                 if(selectedStates[i].id == e.features[0].id) {
-                    console.log("im hitting the right place");
-                    var index = selectedStates.indexOf(e.features[0].id);
-                    if(index > -1) {
-                        selectedStates.splice(index, 1);
-                    }
+                    selectedStates.splice(i, 1);
                 }
             }
         }
@@ -608,6 +658,21 @@ map.on("mouseleave", "states", function() {
     }
     hoveredStateId =  null;
 });
+
+// extras
+
+function resizeControls() {
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    var controlsHeight = document.getElementById('controls').clientHeight;
+    var margin = (height - controlsHeight) / 2;
+    document.getElementById('controls').style.marginTop = margin + 'px';
+    document.getElementById('controls').style.marginBottom = margin + 'px';
+}
+
+resizeControls();
+
+
 
 
 // map.addControl(new mapboxgl.FullscreenControl());

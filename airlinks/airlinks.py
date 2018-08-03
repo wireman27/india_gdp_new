@@ -95,8 +95,8 @@ for row in airPairs:
 features = geojson['features']
 features[0]
 
-with open(path+'/airlinks.geojson','w') as f:
-    json.dump(geojson,f)
+# with open(path+'/airlinks.geojson','w') as f:
+#     json.dump(geojson,f)
 
 
 
