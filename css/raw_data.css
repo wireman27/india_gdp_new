@@ -5,7 +5,6 @@ th {
 
 a {
     text-decoration: none;
-    color:grey;
 }
 
 td {
@@ -44,4 +43,8 @@ ul#master-list p {
 
 ul#master-list li {
     margin-bottom: 5%;
+}
+
+p a {
+    color:grey;
 }
