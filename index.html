@@ -50,9 +50,9 @@
           <li><a href="https://wireman27.github.io/india_gdp_new/qgis_docs" target="_blank">QGIS Walkthrough</a></li>
           <li><a href="http://www.ngdc.noaa.gov/eog/pubs/Ghosh_TOGEOGJ.pdf" target="_blank">Original Paper</a></li>
           <li id='infohint1change'><a href=javascript:compareTool() style='color:orange'>Compare States</a></li>
+          <li><a href="https://wireman27.github.io/india_gdp_new/raw_data" target="_blank">Data</a></li>
           <li>
-            <!-- <img src='res/info.svg' width='19px' height=19px> -->
-            <a href='javascript:toggleInfo()'><img src='res/info2.svg' width='19px' height=19px></a>
+            <a href='javascript:toggleInfo()'><img src='res/info5.svg' width='19px' height=19px> About</a>
         </li>
         </ul>
     </div>
@@ -132,8 +132,8 @@ var airlinks_url = 'https://a.tiles.mapbox.com/v4/'+airlinks_tiles+'/{z}/{x}/{y}
 var currentZoom = 5;
 var hoveredStateId =  null;
 var bounds = [
-    [50.22214724308444,7.167155470801902],
-    [104.30007044563308,39.99115993534974]
+    [48.22214724308444,5.167155470801902],
+    [106.30007044563308,41.99115993534974]
 ];
 var is_compare_states = false;
 var selectedStates = [];
@@ -160,7 +160,7 @@ var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/wireman27/cjjxpgblc4lco2spl206pi2d9',
     zoom: 4,
-    center: [77.645, 21.69],
+    center: [77.26, 23.17],
     pitch: 0,
     bearing: 0.6,
     minZoom: 3,
@@ -344,6 +344,13 @@ function backToHome() {
 	selectedStates = [];
 	is_compare_states = false;
 
+    map.jumpTo({
+        zoom: 4,
+        center: [77.26, 23.17],
+        pitch: 0,
+        bearing: 0.6,
+        minZoom: 3
+    })
 }
 
 function compareTool() {
@@ -378,6 +385,14 @@ function goBackFromCompare() {
 
     cmap1.remove();
     cmap2.remove();
+
+    map.jumpTo({
+        zoom: 4,
+        center: [77.26, 23.17],
+        pitch: 0,
+        bearing: 0.6,
+        minZoom: 3
+    })
 
     goBackFromCompareUI();
 }

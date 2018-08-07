@@ -18,12 +18,14 @@ function compareToolUI() {
     document.getElementById('map').style.display = 'block';
     console.log('reached here');
     changeListElement(0, "Choose any two states",undefined,undefined,undefined,removeHref=true);
-    for(i=2;i<4;i++) {
+    for(i=2;i<5;i++) {
         changeListElement(i)
     }
     changeListElement(1,"Compare!","javascript:compareStates()","style","color:orange");
     changeListElement(2,"Back to Home","javascript:backToHome()");
-    changeListElement(4,undefined,undefined,undefined,undefined,undefined,innerHtml="")
+    changeListElement(3,undefined,undefined,undefined,undefined,true,innerHtml="")
+    changeListElement(4,undefined,undefined,undefined,undefined,true,innerHtml="")
+    changeListElement(5,undefined,undefined,undefined,undefined,true,innerHtml="")
     document.getElementById('controls').style.display = 'none';
 }
 
@@ -62,7 +64,8 @@ function backToHomeUI() {
 	changeListElement(2, "Original Paper","http://www.ngdc.noaa.gov/eog/pubs/Ghosh_TOGEOGJ.pdf", "target", "_blank")
 	changeListElement(3, "Compare States","javascript:compareTool()", "target", "_blank")
 	changeListElement(3, "Compare States","javascript:compareTool()", "style", "color:orange")
-    changeListElement(4, "","javascript:toggleInfo()",undefined, undefined,undefined,"<img src='res/info2.svg' width='19px' height=19px>")
+    changeListElement(4, "Data","https://wireman27.github.io/india_gdp_new/raw_data", "style", "color:white")
+    changeListElement(5, "","javascript:toggleInfo()",undefined, undefined,undefined,"<img src='res/info5.svg' width='19px' height=19px> About")
 
 	document.getElementsByClassName("mapboxgl-control-container")[0].style.display = 'block';
 

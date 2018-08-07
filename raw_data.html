@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>India GDP - QGIS Docs</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="css/raw_data.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  </head>
+<body>
+  <div class="container">
+	<header><h>Data Files for the India GDP Webtool</h></header>
+  <br>
+  <br>
+
+  <ul id='master-list'>
+    <li>
+      <p><span class='metahead'>Name:</span> GDP Per Pixel in INR for 2015-2016 at 2011-2012 Prices</p>
+      <p><span class='metahead'>File Type:</span> CSV</p>
+      <p><span class='metahead'>To download:</span> Click <a href="https://raw.githubusercontent.com/wireman27/india_gdp_new/master/raw_data/gdpp.csv" target="_blank">here</a></p>
+      <table>
+        <tr>
+          <th>Column</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>lng</td>
+          <td>Longitude of the point that represents the center of a 1km<sup>2</sup> grid pixel</td>
+        </tr>
+        <tr>
+          <td>lat</td>
+          <td>Latitude of the point that represents the center of a 1km<sup>2</sup> grid pixel</td>
+        </tr>
+        <tr>
+          <td>state_id</td>
+          <td>Unique identifier of a state or union territory based on <a>here</a></td>
+        </tr>
+        <tr>
+          <td>gdpp</td>
+          <td>Gross Domestic Product for the 1km<sup>2</sup> grid whose center is represented by the point having coordinates lng and lat</td>
+        </tr>
+      </table>
+    </li>
+    <li>
+      <p><span class='metahead'>Name:</span> Air Routes in India based on the DGCA's published Summer Schedule for the period 25th March 2018 to 27th October 2018</p>
+      <p><span class='metahead'>File Type:</span> CSV</p>
+      <p><span class='metahead'>To download:</span> Click <a href="https://raw.githubusercontent.com/wireman27/india_gdp_new/master/raw_data/airlinks.csv" target="_blank">here</a></p>
+      <table>
+        <tr>
+          <th>Column</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>air1_iata</td>
+          <td><a href="https://en.wikipedia.org/wiki/IATA_airport_code" target="_blank">IATA</a> Code for Airport 1</td>
+        </tr>
+        <tr>
+          <td>air1_lat</td>
+          <td>Latitude of Airport 1</td>
+        </tr>
+        <tr>
+          <td>air1_lng</td>
+          <td>Longitude of Airport 1</td>
+        </tr>
+        <tr>
+          <td>air2_iata</td>
+          <td><a href="https://en.wikipedia.org/wiki/IATA_airport_code" target="_blank">IATA</a> Code for Airport 2</td>
+        </tr>
+        <tr>
+          <td>air2_lat</td>
+          <td>Latitude of Airport 2</td>
+        </tr>
+        <tr>
+          <td>air2_lng</td>
+          <td>Longitude of Airport 2</td>
+        </tr>
+        <tr>
+          <td>route</td>
+          <td>Indicates if the route is part of the <a href="https://en.wikipedia.org/wiki/UDAN" target="_blank">Regional Connectivity Scheme (RCS</a></td>
+        </tr>
+        <tr>
+          <td>twc</td>
+          <td>Total weekly passenger capacity from air1_iata to air2_iata</td>
+        </tr>
+      </table>
+    </li>
+
+
+
+  </ul>
+
+  </div>
+
+  </div>
+
+
+</body>
+</html>

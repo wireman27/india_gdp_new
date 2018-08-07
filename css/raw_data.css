@@ -1,0 +1,47 @@
+th {
+    text-align: center;
+    border: 1px dotted black;
+}
+
+a {
+    text-decoration: none;
+    color:grey;
+}
+
+td {
+    text-align:center;
+    border: 1px dotted black;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+table {
+    border: 1px dotted black;
+    margin-top: 3%;
+    border-collapse: collapse;
+}
+
+.container {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 2%;
+}
+
+header {
+    text-align: center;
+    font-size: 30px;
+}
+
+.metahead {
+    font-weight:bold;
+}
+
+ul#master-list p {
+    margin:0px;
+}
+
+ul#master-list li {
+    margin-bottom: 5%;
+}
