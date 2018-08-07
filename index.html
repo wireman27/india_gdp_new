@@ -45,7 +45,7 @@
     </div>
 <div id='container'>
     <div id="links">
-        <ul class='docs'>
+        <ul id='linklist'class='docs'>
           <li><a href="https://github.com/wireman27/india_gdp_new" target="_blank">Github</a></li>
           <li><a href="https://wireman27.github.io/india_gdp_new/qgis_docs" target="_blank">QGIS Walkthrough</a></li>
           <li><a href="http://www.ngdc.noaa.gov/eog/pubs/Ghosh_TOGEOGJ.pdf" target="_blank">Original Paper</a></li>
@@ -58,7 +58,6 @@
     </div>
 
     <div id='control-toggle' onclick='toggleControls()'></div>
-
 
     <div id='controls'>
         <h3>Toggle Layers</h3>
@@ -611,6 +610,39 @@ document.getElementById('infohint2').onmouseleave = function() {
 }
 
 
+
+document.getElementById('links').onmouseenter = function() {
+    element = document.getElementById('linklist');
+    element.style.opacity = 1;
+}
+    
+
+document.getElementById('links').onmouseleave = function() {
+    element = document.getElementById('linklist')
+    var start = null;
+    isMouseEnter = false;
+    element.onmouseenter = function() {
+        isMouseEnter = true;
+    }
+    if(!is_compare_states) {
+        function step(timestamp) {
+            if (!start) start = timestamp;
+            var progress = timestamp - start;
+            element.style.opacity = 1.1 - progress/3000
+            if(isMouseEnter) {
+                element.style.opacity = 1;
+                return;
+            }
+            if (progress < 3000) {
+                window.requestAnimationFrame(step);
+            }
+        }
+    window.requestAnimationFrame(step);
+    document.getElementById('linklist').style.opacity = 0;
+    }
+}
+
+
 slideElement.onmouseover = function(){
     if(slider.attributes['disabled']){
         document.getElementById('airlinks-filter').innerText = 'Please enable the Airlinks filter';
@@ -623,8 +655,6 @@ slideElement.onmouseleave = function(){
     }
 };
 
-document.getElementById
-
 
 map.on('click','states',function(e) {
     if (hoveredStateId && !is_compare_states) {
@@ -633,7 +663,6 @@ map.on('click','states',function(e) {
     }
     if (is_compare_states && e.features.length > 0) {
         var clickStat = map.getFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id}).click
-        console.log(clickStat);
         if (clickStat != true) {
             if (selectedStates.length < 2) {
                 map.setFeatureState({source: 'states', sourceLayer: states_layer, id: e.features[0].id},{click: true});

@@ -220,6 +220,14 @@ input:nth-child(3) {
 	z-index: 2;
 }
 
+/*#links:hover > ul.docs {
+	list-style-type: none;
+	margin: 0;
+	overflow: hidden;
+	background-color: transparent;
+	font-family: 'Montserrat', sans-serif;
+}*/
+
 ul.docs {
 	list-style-type: none;
 	margin: 0;
@@ -227,6 +235,16 @@ ul.docs {
 	overflow: hidden;
 	background-color: transparent;
 	font-family: 'Montserrat', sans-serif;
+}
+
+@keyframes fadeout {
+	from {opacity: 1}
+	to {opacity: 0}
+}
+
+@keyframes fadein {
+	from {opacity: 0}
+	to {opacity: 1}
 }
 
 ul.docs li {

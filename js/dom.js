@@ -13,10 +13,9 @@ function changeListElement(number, text="", link="#",attributeKey="style",attrib
 }
 
 function compareToolUI() {
-    console.log('first')
+    document.getElementById('linklist').style.visibility = 'visible';
     document.getElementsByClassName("mapboxgl-control-container")[0].style.display = 'none';
     document.getElementById('map').style.display = 'block';
-    console.log('reached here');
     changeListElement(0, "Choose any two states",undefined,undefined,undefined,removeHref=true);
     for(i=2;i<5;i++) {
         changeListElement(i)
@@ -73,7 +72,6 @@ function backToHomeUI() {
 }
 
 function airlinksListUi() {
-    console.log("hit the button");
     var list = document.getElementById('airlinks-list');
     if (list.style.display == "") {
         list.style.display = 'block';
