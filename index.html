@@ -128,6 +128,11 @@ var url = 'https://a.tiles.mapbox.com/v4/'+gdp_tiles+'/{z}/{x}/{y}.mvt?access_to
 var airlinks_tiles = 'wireman27.1yx55gw1';
 var airlinks_layer = 'airlinks-d6ccl2';
 var airlinks_url = 'https://a.tiles.mapbox.com/v4/'+airlinks_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
+var nldi_tiles = 'wireman27.a3uaunln'
+var nldi_layer = 'nldi'
+var nldi_url = 'https://a.tiles.mapbox.com/v4/'+nldi_tiles+'/{z}/{x}/{y}.mvt?access_token='+mapboxgl.accessToken;
+
+
 var currentZoom = 5;
 var hoveredStateId =  null;
 var bounds = [
@@ -192,6 +197,13 @@ function addAirlinks(themap) {
         "type":"vector",
         "tiles": [airlinks_url]
     });
+}
+
+function addNldi(themap) {
+    themap.addSource("nldi",{
+        "type":"vector",
+        "tiles":[nldi_url]
+    })
 }
 
 
@@ -269,11 +281,37 @@ function addStatesBoundary(themap) {
     })
 }
 
+function addNldiLayer(themap) {
+    themap.addLayer({
+        "id":"nldi",
+        "type":"fill",
+        "source":"nldi",
+        "layout":{},
+        "source-layer":nldi_layer,
+        "paint": {
+            "fill-color":{
+                'property':'final_gini',
+                'type':'exponential',
+                'stops': [
+                [0.2,'white'],
+                [0.4,'#ffbf00'],
+                [0.6,'#ff8000'],
+                [0.8,'#ff0000'],
+                [1,'black']
+                ]
+            },
+            'fill-opacity':0.2
+        }
+    })
+}
+
+
 function addDataLayer() {
     addGdpLayer(map);
     addStatesLayer(map);
     addAirlinksLayer(map);
     addStatesBoundary(map);
+    addNldiLayer(map);
 }
 
 //making the map pretty
@@ -282,6 +320,7 @@ map.on('style.load', function () {
     addGdp(map);
     addStates(map);
     addAirlinks(map);
+    addNldi(map);
     document.getElementById('gdp-data').checked = true;
     document.getElementById('states-boundary').checked = true;
     addDataLayer();
