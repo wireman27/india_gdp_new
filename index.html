@@ -60,7 +60,7 @@
     <div id='control-toggle' onclick='toggleControls()'></div>
 
     <div id='controls'>
-        <h3>Toggle Layers</h3>
+        <h3>TOGGLE LAYERS</h3>
         <ul class='toggle'>
             <li id='gdp-data-toggle'>
                 <input type="checkbox" id="gdp-data"  onclick="toggleLayer(this.id)">
@@ -72,17 +72,36 @@
                 <span class='tooltiptext'>Air links weighted by total weekly passenger capacity on a given route based on summer schedule <a href='http://dgca.nic.in/dom_flt_schedule/flt_index.htm' target='_blank'>data</a> from the DGCA.</span>
                 </p>
             </li>
+            <li id='nldi-toggle'>
+                <input type="checkbox" id="nldi"  onclick="toggleLayer(this.id)">
+                <p class='tooltip'>NLDI
+                <span class='tooltiptext'>The Nighlight Development Index is a measure of how evenly light is distributed across populations. It answers the question of to what extent people are living in the dark. Original paper <a href='https://www.researchgate.net/publication/266224607_The_Night_Light_Development_Index_NLDI_A_spatially_explicit_measure_of_human_development_from_satellite_data' target='_blank'>here</a></span>
+            </li>
             <li id='states-boundary-toggle'>
                 <input type="checkbox" id="states-boundary"  onclick="toggleLayer(this.id)">
                 State Boundaries
             </li>
         </ul>
-        <h3>Airlinks Filters</h3>
-        <div id='slider'></div>
-        <div class='filter-info' id='airlinks-filter'></div>
-        <div id='airlinks-city'>
-            <p id='airlinks-city-text' style='color: #999'>All Cities selected</p>
-            <button id='airlinks-button' type="button" disabled='true' onclick='airlinksListUi()'>&gt;</button>
+        <div id='filters' class='controls-dropdown'>
+            <h3><a class='un' onclick='toggleControlsDropdown(this.parentNode.parentNode.id+"-dd")'>FILTERS</a></h3>
+            <div id='filters-dd' class='controls-dropdown-sub'>
+                <div class='measuringWrapper'>
+                <div id='airlinks-filter-dd' class='filter-sub'>
+                    <h4>Airlinks</h4>
+                    <div id='slider'></div>
+                    <div class='filter-info' id='airlinks-filter'></div>
+                    <div id='airlinks-city'>
+                        <p id='airlinks-city-text' style='color: #999'>All Cities selected</p>
+                        <button id='airlinks-button' type="button" disabled='true' onclick='airlinksListUi()'>&gt;</button>
+                    </div>
+                </div>
+                <div id='nldi-filter-dd' class='filter-sub'>
+                    <h4>NLDI</h4>
+                    <div id='slidernldi'></div>
+                    <div class='filter-info' id='nldi-filter'></div>
+                </div>
+                </div>
+            </div>
         </div>
 
         <div id='airlinks-list'></div>
@@ -152,6 +171,7 @@ var statesMetadata;
 var statesMetadataUrl = 'https://raw.githubusercontent.com/wireman27/india_gdp_new/master/json/statesMetadata.json'
 var links = document.getElementsByClassName("docs");
 var slider = document.getElementById('slider');
+var slidernldi = document.getElementById('slidernldi');
 var slideElement = document.getElementById('slider');
 var airportMetadata;
 var airportMetadataUrl = 'json/airportMetadata.json';
@@ -286,7 +306,9 @@ function addNldiLayer(themap) {
         "id":"nldi",
         "type":"fill",
         "source":"nldi",
-        "layout":{},
+        "layout":{
+            "visibility":'none'
+        },
         "source-layer":nldi_layer,
         "paint": {
             "fill-color":{
@@ -325,6 +347,7 @@ map.on('style.load', function () {
     document.getElementById('states-boundary').checked = true;
     addDataLayer();
     slider.setAttribute('disabled', true);
+    slidernldi.setAttribute('disabled',true);
     slider.noUiSlider.on('update', function() {
         if (selectedAirlinkCity ==  null) {
             map.setFilter('airlinks',
@@ -347,6 +370,19 @@ map.on('style.load', function () {
             populateAirlinksFilter();         
         }
     });
+    slidernldi.noUiSlider.on('update', function() {
+        if(!slidernldi.attributes['disabled']) {   
+            populateNldiFilter();         
+        }
+        console.log(slidernldi.noUiSlider.get()[0]);
+        console.log(slidernldi.noUiSlider.get()[1]);
+        map.setFilter('nldi',
+        ["all",
+            [">=","final_gini",slidernldi.noUiSlider.get()[0]/100],
+            ["<=","final_gini",slidernldi.noUiSlider.get()[1]/100]
+        ])
+    });
+
 });
 
 
@@ -538,6 +574,15 @@ noUiSlider.create(slider, {
     }
 });
 
+noUiSlider.create(slidernldi, {
+    start: [50, 75],
+    connect: true,
+    range: {
+        'min': 0,
+        'max': 100
+    }
+});
+
 
 function toggleLayer(layerName) {
     if(map.getLayoutProperty(layerName, 'visibility') == 'none') {
@@ -558,6 +603,10 @@ function toggleLayer(layerName) {
                 xhttp.send();
             };
         }
+        if(layerName == 'nldi') {
+            slidernldi.removeAttribute('disabled')
+            populateNldiFilter();
+        }
         map.setLayoutProperty(layerName,'visibility','visible')
     } else {
         if(layerName == 'airlinks') {
@@ -566,6 +615,10 @@ function toggleLayer(layerName) {
             document.getElementById('airlinks-city-text').style.color = '#999';
             document.getElementById('airlinks-button').setAttribute('disabled','true');
             document.getElementById('airlinks-list').style.display = '';
+        }
+        if(layerName == 'nldi') {
+            slidernldi.setAttribute('disabled', true);
+            document.getElementById('nldi-filter').innerText = '';
         }
         map.setLayoutProperty(layerName,'visibility','none')
     }
@@ -584,6 +637,12 @@ function populateAirlinksFilter() {
         'Between '+Math.round(slider.noUiSlider.get()[0])+
         ' & '+Math.round(slider.noUiSlider.get()[1])+
         ' passengers per week'
+}
+
+function populateNldiFilter() {
+    document.getElementById('nldi-filter').innerText= 
+        'Between '+ (slidernldi.noUiSlider.get()[0] / 100).toFixed(2) +
+        ' & '+ (slidernldi.noUiSlider.get()[1] / 100).toFixed(2)
 }
 
 function genAirports() {
@@ -694,6 +753,18 @@ slideElement.onmouseleave = function(){
     }
 };
 
+slidernldi.onmouseover = function(){
+    if(slidernldi.attributes['disabled']){
+        document.getElementById('nldi-filter').innerText = 'Please enable the NLDI filter';
+    }
+};
+
+slidernldi.onmouseleave = function(){
+    if(slidernldi.attributes['disabled']) {
+        document.getElementById('nldi-filter').innerText = '';
+    }
+};
+
 
 map.on('click','states',function(e) {
     if (hoveredStateId && !is_compare_states) {
@@ -742,6 +813,7 @@ map.on("mouseleave", "states", function() {
     hoveredStateId =  null;
 });
 
+
 // extras
 
 function resizeControls() {
@@ -754,6 +826,23 @@ function resizeControls() {
 }
 
 resizeControls();
+
+function toggleControlsDropdown(controlcollapsible) {
+    // control = document.getElementById(controlcollapsible)
+    // if(control.style.display == "block"||control.style.display=='') {
+    //     control.style.display = "none";
+    // } else {
+    //     control.style.display = "block";
+    // }
+    control = document.getElementById(controlcollapsible)
+    if (control.clientHeight) {
+        control.style.height = 0;
+    } else {
+        var wrapper = document.querySelector('.measuringWrapper');
+        control.style.height = wrapper.clientHeight + "px";
+    }
+    // resizeControls();
+}
 
 
 
