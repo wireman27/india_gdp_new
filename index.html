@@ -60,68 +60,85 @@
     <div id='control-toggle' onclick='toggleControls()'></div>
 
     <div id='controls'>
-        <h3>TOGGLE LAYERS</h3>
-        <ul class='toggle'>
-            <li id='gdp-data-toggle'>
-                <input type="checkbox" id="gdp-data"  onclick="toggleLayer(this.id)">
-                GDP
-            </li>
-            <li id='airlinks-toggle'>
-                <input type="checkbox" id="airlinks"  onclick="toggleLayer(this.id)">
-                <p class='tooltip'>Airlinks
-                <span class='tooltiptext'>Air links weighted by total weekly passenger capacity on a given route based on summer schedule <a href='http://dgca.nic.in/dom_flt_schedule/flt_index.htm' target='_blank'>data</a> from the DGCA.</span>
-                </p>
-            </li>
-            <li id='nldi-toggle'>
-                <input type="checkbox" id="nldi"  onclick="toggleLayer(this.id)">
-                <p class='tooltip'>NLDI
-                <span class='tooltiptext'>The Nighlight Development Index is a measure of how evenly light is distributed across populations. It answers the question of to what extent people are living in the dark. Original paper <a href='https://www.researchgate.net/publication/266224607_The_Night_Light_Development_Index_NLDI_A_spatially_explicit_measure_of_human_development_from_satellite_data' target='_blank'>here</a></span>
-            </li>
-            <li id='states-boundary-toggle'>
-                <input type="checkbox" id="states-boundary"  onclick="toggleLayer(this.id)">
-                State Boundaries
-            </li>
-        </ul>
-        <div id='filters' class='controls-dropdown'>
-            <h3><a class='un' onclick='toggleControlsDropdown(this.parentNode.parentNode.id+"-dd")'>FILTERS</a></h3>
-            <div id='filters-dd' class='controls-dropdown-sub'>
-                <div class='measuringWrapper'>
-                <div id='airlinks-filter-dd' class='filter-sub'>
-                    <h4>Airlinks</h4>
-                    <div id='slider'></div>
-                    <div class='filter-info' id='airlinks-filter'></div>
-                    <div id='airlinks-city'>
-                        <p id='airlinks-city-text' style='color: #999'>All Cities selected</p>
-                        <button id='airlinks-button' type="button" disabled='true' onclick='airlinksListUi()'>&gt;</button>
-                    </div>
-                </div>
-                <div id='nldi-filter-dd' class='filter-sub'>
-                    <h4>NLDI</h4>
-                    <div id='slidernldi'></div>
-                    <div class='filter-info' id='nldi-filter'></div>
-                </div>
-                </div>
-            </div>
+        <div id='controls-headers'>
+            <ul id='controls-headers'>
+                <li id='controls-layers' onclick=selectControlsType(this.id) state='selected' style='color:orange'>Layers</li>
+                <li id='controls-filters' onclick=selectControlsType(this.id) state='null'>Filters</li>
+                <li id='controls-legends' onclick=selectControlsType(this.id) state='null'>Legends</li>
+            </ul>
         </div>
-
-        <div id='airlinks-list'></div>
-
-        <h3>GDP Legend (INR Million per km<sup>2</sup>)</h3>
-        <div class='my-legend'>
-       <!--      <div class='legend-title'>Real GDP per km<sup>2</sup> (INR Million)</div> -->
-            <div class='legend-scale'>
-                <ul class='legend-labels' style='padding-left:0px;padding-top:0px;'>
-                    <li><span style='background:#262626;'></span>&lt;100</li>
-                    <li><span style='background:#ff9933;'></span>500</li>
-                    <li><span style='background:#ff5050;'></span>1500</li>
-                    <li><span style='background:#660033;'></span>&gt;1500</li>
+        <div id='controls-body'>
+            <div id='controls-body-layers' class='controls-body-item'>
+                <ul class='toggle'>
+                    <li id='gdp-data-toggle'>
+                        <input type="checkbox" id="gdp-data"  onclick="toggleLayer(this.id)">
+                        GDP
+                    </li>
+                    <li id='airlinks-toggle'>
+                        <input type="checkbox" id="airlinks"  onclick="toggleLayer(this.id)">
+                        <p class='tooltip'>Airlinks
+                        <span class='tooltiptext'>Air links weighted by total weekly passenger capacity on a given route based on summer schedule <a href='http://dgca.nic.in/dom_flt_schedule/flt_index.htm' target='_blank'>data</a> from the DGCA.</span>
+                        </p>
+                    </li>
+                    <li id='nldi-toggle'>
+                        <input type="checkbox" id="nldi"  onclick="toggleLayer(this.id)">
+                        <p class='tooltip'>NLDI
+                        <span class='tooltiptext'>The Nighlight Development Index is a measure of how evenly light is distributed across populations. The darker the more uneven. Original paper <a href='https://www.researchgate.net/publication/266224607_The_Night_Light_Development_Index_NLDI_A_spatially_explicit_measure_of_human_development_from_satellite_data' target='_blank'>here</a></span>
+                    </li>
+                    <li id='states-boundary-toggle'>
+                        <input type="checkbox" id="states-boundary"  onclick="toggleLayer(this.id)">
+                        State Boundaries
+                    </li>
                 </ul>
             </div>
+            <div id='controls-body-filters' class='controls-body-item' style='display:none'>
+                <div id='filters' class='controls-dropdown'>
+                    <div id='airlinks-filter-dd' class='filter-sub'>
+                        <h4>Airlinks</h4>
+                        <div id='slider'></div>
+                        <div class='filter-info' id='airlinks-filter'></div>
+                        <div id='airlinks-city'>
+                            <p id='airlinks-city-text' style='color: #999'>All Cities selected</p>
+                            <button id='airlinks-button' type="button" disabled='true' onclick='airlinksListUi()'>&gt;</button>
+                        </div>
+                        <div id='airlinks-list'></div>
+                    </div>
+                    <div id='nldi-filter-dd' class='filter-sub'>
+                        <h4>NLDI</h4>
+                        <div id='slidernldi'></div>
+                        <div class='filter-info' id='nldi-filter'></div>
+                    </div>
+                </div>  
+            </div>
+            <div id='controls-body-legends' class='controls-body-item' style='display:none'>
+                <h6>GDP (INR Million per km<sup>2</sup>)</h3>
+                <div class='my-legend'>
+                    <div class='legend-scale'>
+                        <ul class='legend-labels' style='padding-left:0px;padding-top:0px;'>
+                            <li><span style='background:#262626;'></span>&lt;100</li>
+                            <li><span style='background:#ff9933;'></span>500</li>
+                            <li><span style='background:#ff5050;'></span>1500</li>
+                            <li><span style='background:#660033;'></span>&gt;1500</li>
+                        </ul>
+                    </div>
+                </div>
+                <br>
+                <h6>NLDI</h3>
+                <div class='my-legend'>
+                    <div class='legend-scale'>
+                        <ul class='legend-labels' style='padding-left:0px;padding-top:0px;'>
+                            <li><span style='background:white;'></span>&lt;0.2</li>
+                            <li><span style='background:#ffbf00;'></span>0.4</li>
+                            <li><span style='background:#ff8000;'></span>0.6</li>
+                            <li><span style='background:#ff0000;'></span>0.8</li>
+                            <li><span style='background:#black;'></span>&gt;0.8</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-
-
-
+    </div> <!--end controls-->
+    
     <div id='allmaps'>
         <div id='map'></div>
         <div class = 'comparemaps' id='cmap1'></div>
@@ -743,7 +760,7 @@ document.getElementById('links').onmouseleave = function() {
 
 slideElement.onmouseover = function(){
     if(slider.attributes['disabled']){
-        document.getElementById('airlinks-filter').innerText = 'Please enable the Airlinks filter';
+        document.getElementById('airlinks-filter').innerText = 'Please enable the Airlinks layer';
     }
 };
 
@@ -755,7 +772,7 @@ slideElement.onmouseleave = function(){
 
 slidernldi.onmouseover = function(){
     if(slidernldi.attributes['disabled']){
-        document.getElementById('nldi-filter').innerText = 'Please enable the NLDI filter';
+        document.getElementById('nldi-filter').innerText = 'Please enable the NLDI layer';
     }
 };
 
@@ -827,21 +844,20 @@ function resizeControls() {
 
 resizeControls();
 
-function toggleControlsDropdown(controlcollapsible) {
-    // control = document.getElementById(controlcollapsible)
-    // if(control.style.display == "block"||control.style.display=='') {
-    //     control.style.display = "none";
-    // } else {
-    //     control.style.display = "block";
-    // }
-    control = document.getElementById(controlcollapsible)
-    if (control.clientHeight) {
-        control.style.height = 0;
-    } else {
-        var wrapper = document.querySelector('.measuringWrapper');
-        control.style.height = wrapper.clientHeight + "px";
+function selectControlsType(type) {
+    selectedDiv = "controls-body-"+type.split("-")[1];
+    divs = document.getElementsByClassName("controls-body-item");
+    for(x=0;x < divs.length;x++) {
+        divs[x].style.display='none'
     }
-    // resizeControls();
+    y = document.getElementById('controls-headers')
+    for(x=0;x<y.children[0].children.length;x++){
+        y.children[0].children[x].style.color = 'white'
+        y.children[0].children[x].setAttribute('state','null');
+    }
+    document.getElementById(type).setAttribute('state','selected')
+    document.getElementById(type).style.color='orange'
+    document.getElementById(selectedDiv).style.display='block';
 }
 
 
