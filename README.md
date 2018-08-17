@@ -87,12 +87,15 @@ For each unique district, the NLDI is calculated as follows:
 2. If you have a district of 100km<sup>2</sup>, that equates to 100 pixels meaning you'll have 100 values at the end of step 1.
 3. Filter any duplicate values and sort these values in ascending order.
 4. Once sorted, for each value (radiance per capita):
-    a)calculate the total population living with that value. Basically take every pixel that yields the given value and sum the population across these pixes
-    b)calculate the total light emitted by pixels that have the given value. Basically take every pixel that yields the given value and sum the light across these pixels
+    1. calculate the total population living with that value. Basically take every pixel that yields the given value and sum the population across these pixes
+    2. calculate the total light emitted by pixels that have the given value. Basically take every pixel that yields the given value and sum the light across these pixels
 5. Now calculate cumulative percentages for total population and total light. 
 6. Create a graph with cumulative total light being the Y-axis and cumulative total population being the X-axis.
 7. Calculate the NLDI index as the area under the perfect equality triangle minus the area under the curve in 6.
 
+# Airlinks Layer
+
+The Airlinks Layer represents total weekly capacity on all domestic routes based on the Summer Schedule (25th March 2018 to 27th October 2018) [released](25th March 2018 to 27th October 2018) by the DGCA. Raw data and Python scripts are [here](https://github.com/wireman27/india_gdp_new/tree/master/airlinks).
 
 (Thanks to Ben Balter's sleek [Word to Markdown tool](https://word-to-markdown.herokuapp.com/))
 
