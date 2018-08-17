@@ -95,7 +95,7 @@ For each unique district, the NLDI is calculated as follows:
 
 # Airlinks Layer
 
-The Airlinks Layer represents total weekly capacity on all domestic routes based on the Summer Schedule (25th March 2018 to 27th October 2018) [released](25th March 2018 to 27th October 2018) by the DGCA. Raw data and Python scripts are [here](https://github.com/wireman27/india_gdp_new/tree/master/airlinks).
+The Airlinks Layer represents total weekly passenger capacity on all domestic routes based on the Summer Schedule (25th March 2018 to 27th October 2018) [released](25th March 2018 to 27th October 2018) by the DGCA. Raw data and Python scripts are [here](https://github.com/wireman27/india_gdp_new/tree/master/airlinks).
 
 (Thanks to Ben Balter's sleek [Word to Markdown tool](https://word-to-markdown.herokuapp.com/))
 
